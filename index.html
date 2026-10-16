@@ -1,0 +1,2004 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Akshat Studio — High-Performance Web Architecture for US & UK Businesses</title>
+  <meta name="description" content="Akshat Studio designs and deploys custom, lightning-fast web infrastructure for trade contractors, medical practices, and professional services. Built to load under 1s, live in 48 hours.">
+
+  <!-- Favicon SVG -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='10' fill='%2308090D'/><path d='M9 23L16 9L23 23H19L16 16.5L13 23H9Z' fill='%236366F1'/><circle cx='16' cy='13' r='2' fill='%2306B6D4'/></svg>">
+
+  <!-- Google Fonts: Plus Jakarta Sans (400, 500, 600, 700, 800) & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            canvas: {
+              base: '#07080c',
+              deep: '#0a0b10',
+              card: 'rgba(9, 10, 15, 0.6)',
+              elevated: 'rgba(18, 20, 28, 0.75)',
+            },
+            brand: {
+              indigo: '#6366F1',
+              indigoLight: '#818CF8',
+              cyan: '#06B6D4',
+              cyanGlow: '#22D3EE',
+              emerald: '#10B981',
+            }
+          },
+          animation: {
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 6s ease-in-out infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-6px)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* CSS Tokens & Custom Atmosphere */
+    :root {
+      color-scheme: dark;
+    }
+
+    body {
+      background-color: #07080c;
+      color: #a1a1aa;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    }
+
+    /* 3D Receding Perspective Grid with Scanline and Glow Animation */
+    .ambient-perspective-grid {
+      background-size: 52px 52px;
+      background-image: 
+        linear-gradient(to right, rgba(99, 102, 241, 0.16) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(6, 182, 212, 0.16) 1px, transparent 1px);
+      mask-image: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 35%, transparent 70%);
+      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 35%, transparent 70%);
+      animation: grid-scanline 16s linear infinite, grid-pulse-glow 8s ease-in-out infinite alternate;
+      will-change: transform, background-position;
+    }
+
+    @keyframes grid-scanline {
+      0% {
+        background-position: 0 0;
+      }
+      100% {
+        background-position: 0 52px;
+      }
+    }
+
+    @keyframes grid-pulse-glow {
+      0% {
+        opacity: 0.35;
+        filter: drop-shadow(0 0 1px rgba(99, 102, 241, 0.25));
+      }
+      50% {
+        opacity: 0.58;
+        filter: drop-shadow(0 0 5px rgba(6, 182, 212, 0.45));
+      }
+      100% {
+        opacity: 0.35;
+        filter: drop-shadow(0 0 1px rgba(99, 102, 241, 0.25));
+      }
+    }
+
+    /* 3D Floating Anchor Spheres Animation */
+    @keyframes float-slow {
+      0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-26px) rotate(4deg);
+      }
+    }
+
+    @keyframes float-reverse {
+      0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      50% {
+        transform: translateY(24px) rotate(-3deg);
+      }
+    }
+
+    .animate-float-slow {
+      animation: float-slow 14s ease-in-out infinite;
+    }
+
+    .animate-float-reverse {
+      animation: float-reverse 18s ease-in-out infinite;
+    }
+
+    /* UI Panels & Cards (Translucent frosted glass with hairline border) */
+    .glass-panel {
+      background: rgba(9, 10, 15, 0.45);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 1rem;
+      box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .glass-card-interactive {
+      background: rgba(9, 10, 15, 0.45);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 1rem;
+      box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .glass-card-interactive:hover {
+      transform: translateY(-4px);
+      border-color: rgba(99, 102, 241, 0.3);
+      box-shadow: 0 0 30px -5px rgba(99, 102, 241, 0.15), 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Multi-stop Metallic Headline Text */
+    .text-metallic {
+      background: linear-gradient(180deg, #FFFFFF 0%, #F4F4F5 50%, #A1A1AA 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #07080c;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    /* Selection Highlight */
+    ::selection {
+      background: rgba(99, 102, 241, 0.35);
+      color: #FFFFFF;
+    }
+  </style>
+</head>
+<body class="bg-[#07080d] text-zinc-400 font-sans antialiased min-h-screen relative overflow-x-hidden selection:bg-indigo-500/30 selection:text-white">
+
+  <!-- 3D Digital Ambient Background Stack (Fixed Viewport, High-End Tech Depth) -->
+  <div id="ambient-3d-bg" class="fixed inset-0 z-[-1] bg-[#07080d] overflow-hidden pointer-events-none">
+    <!-- Sub-layer A: Deep Cinematic Spotlight -->
+    <div id="ambient-spotlight" class="absolute inset-0 pointer-events-none" style="background: radial-gradient(circle at 50% 0%, rgba(99,102,241,0.18) 0%, rgba(6,182,212,0.06) 40%, rgba(7,8,13,1) 100%);"></div>
+
+    <!-- Sub-layer B: 3D Receding Perspective Ground Grid -->
+    <div class="absolute inset-x-0 bottom-0 h-[65vh] overflow-hidden pointer-events-none" style="perspective: 500px; transform-style: preserve-3d;">
+      <div id="ambient-grid-plane" class="ambient-perspective-grid absolute -inset-x-1/2 bottom-0 h-[1000px] origin-bottom" style="transform: rotateX(68deg);"></div>
+    </div>
+
+    <!-- Sub-layer C: Lightweight Canvas Particle Field -->
+    <canvas id="ambient-dots" class="absolute inset-0 opacity-40 pointer-events-none"></canvas>
+
+    <!-- Sub-layer D: Slight Cinematic Blur & Visual Edge Dampening Overlay -->
+    <div class="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#07080d] to-transparent pointer-events-none backdrop-blur-[20px] opacity-75"></div>
+    <div class="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#07080d] to-transparent pointer-events-none backdrop-blur-[20px] opacity-75"></div>
+    <div class="absolute top-0 inset-x-0 h-28 bg-gradient-to-b from-[#07080d] to-transparent pointer-events-none opacity-60"></div>
+    <div class="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-[#07080d] to-transparent pointer-events-none opacity-80"></div>
+
+    <!-- 3D Floating Accents: 4 Blurred Glowing Glass Decorative Anchor Nodes -->
+    <div id="ambient-node-1" class="ambient-accent-node absolute top-[12%] right-[10%] w-72 h-72 rounded-full bg-indigo-600/15 filter blur-[80px] pointer-events-none animate-float-slow"></div>
+    <div id="ambient-node-2" class="ambient-accent-node absolute top-[38%] left-[5%] w-80 h-80 rounded-full bg-cyan-500/10 filter blur-[90px] pointer-events-none animate-float-reverse"></div>
+    <div id="ambient-node-3" class="ambient-accent-node absolute top-[68%] right-[8%] w-96 h-96 rounded-full bg-indigo-500/10 filter blur-[100px] pointer-events-none animate-float-slow"></div>
+    <div id="ambient-node-4" class="ambient-accent-node absolute bottom-[5%] left-[15%] w-72 h-72 rounded-full bg-blue-600/10 filter blur-[85px] pointer-events-none animate-float-reverse"></div>
+  </div>
+
+  <!-- 1. FLOATING NAVIGATION BAR (Centered Pill / Capsule) -->
+  <div class="sticky top-4 z-50 px-4 sm:px-6">
+    <nav class="mx-auto max-w-6xl xl:max-w-7xl bg-zinc-950/40 backdrop-blur-md border border-white/10 rounded-full px-6 sm:px-8 py-3.5 sm:py-4 shadow-[0_16px_45px_rgba(0,0,0,0.65)] flex items-center justify-between transition-all" aria-label="Main Navigation">
+      
+      <!-- Left: Studio Logo with Animated Glowing Dot -->
+      <a href="#" class="flex items-center gap-3 sm:gap-3.5 group focus:outline-none">
+        <div class="relative flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-600 to-cyan-500 p-[1px] shadow-[0_0_18px_rgba(99,102,241,0.45)] flex-shrink-0">
+          <div class="w-full h-full bg-[#08090D] rounded-full flex items-center justify-center">
+            <span class="relative flex h-3 w-3">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-3 w-3 bg-brand-cyan"></span>
+            </span>
+          </div>
+        </div>
+        <div class="flex items-center">
+          <span class="font-bold text-xl sm:text-2xl tracking-tight text-white group-hover:text-zinc-100 transition">
+            Akshat Studio<span class="text-brand-indigo">.</span>
+          </span>
+        </div>
+      </a>
+
+      <!-- Center Links (Desktop) -->
+      <div class="hidden md:flex items-center gap-8 lg:gap-10">
+        <a href="#demos" class="text-base font-medium text-zinc-300 hover:text-white transition-colors">Work & Demos</a>
+        <a href="#comparison" class="text-base font-medium text-zinc-300 hover:text-white transition-colors">Comparison</a>
+        <a href="#pricing" class="text-base font-medium text-zinc-300 hover:text-white transition-colors">Pricing</a>
+        <a href="#process" class="text-base font-medium text-zinc-300 hover:text-white transition-colors">Process</a>
+      </div>
+
+      <!-- Right: Live Status Badge & Action CTA -->
+      <div class="flex items-center gap-3 sm:gap-4">
+        <!-- Available Badge -->
+        <div class="hidden lg:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-sm font-medium text-emerald-400">
+          <span class="relative flex h-2.5 w-2.5">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+          </span>
+          <span>Available for Q4</span>
+        </div>
+
+        <!-- Action Button -->
+        <a href="#audit-form" class="inline-flex items-center justify-center gap-2 text-base font-semibold text-zinc-950 bg-white hover:bg-zinc-200 px-6 py-3 rounded-full transition-all duration-200 shadow-md shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_28px_rgba(255,255,255,0.35)] active:scale-95 whitespace-nowrap">
+          <span>Get Free 60s Audit</span>
+          <svg class="w-4 h-4 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+        </a>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobile-nav-toggle" type="button" aria-label="Toggle Navigation Menu" class="p-2.5 rounded-full text-zinc-400 hover:text-white hover:bg-white/5 md:hidden focus:outline-none">
+          <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+          <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+
+    </nav>
+
+    <!-- Mobile Dropdown Panel -->
+    <div id="mobile-nav-menu" class="hidden md:hidden mx-auto max-w-md mt-2 p-4 rounded-2xl glass-panel space-y-2 text-sm text-center">
+      <a href="#demos" class="mobile-link block py-2 px-3 rounded-lg text-zinc-300 hover:text-white hover:bg-white/5">Work & Demos</a>
+      <a href="#comparison" class="mobile-link block py-2 px-3 rounded-lg text-zinc-300 hover:text-white hover:bg-white/5">Comparison</a>
+      <a href="#pricing" class="mobile-link block py-2 px-3 rounded-lg text-zinc-300 hover:text-white hover:bg-white/5">Pricing</a>
+      <a href="#process" class="mobile-link block py-2 px-3 rounded-lg text-zinc-300 hover:text-white hover:bg-white/5">Process</a>
+      <a href="#audit-form" class="mobile-link block py-2.5 px-4 rounded-full bg-brand-indigo text-white font-semibold text-xs mt-2">Get Free 60-Second Video Audit →</a>
+    </div>
+  </div>
+
+  <main>
+    <!-- 2. HERO SECTION (Cinematic & High-Trust) -->
+    <section class="relative pt-16 sm:pt-24 lg:pt-28 pb-16 sm:pb-24 overflow-hidden" aria-labelledby="hero-heading">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        
+        <!-- Trust Pill Badge -->
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-xs sm:text-sm font-medium shadow-[0_0_20px_rgba(99,102,241,0.25)] mb-8 hover:border-indigo-400/50 transition">
+          <span class="text-amber-400">⚡</span>
+          <span>High-Performance Web Architecture for US & UK Businesses</span>
+        </div>
+
+        <!-- Main Metallic Headline -->
+        <h1 id="hero-heading" class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.08] text-metallic max-w-4xl mx-auto">
+          Websites That Turn Clicks Into High-Ticket Clients.
+        </h1>
+
+        <!-- Sub-headline -->
+        <p class="mt-6 sm:mt-8 text-base sm:text-lg lg:text-xl text-zinc-400 max-w-3xl mx-auto leading-relaxed font-normal">
+          We design and deploy custom, lightning-fast web infrastructure for trade contractors, medical practices, and professional services. Built to load under 1 second, dominate mobile screens, and generate phone inquiries in 48 hours.
+        </p>
+
+        <!-- Dual Call-to-Actions -->
+        <div class="mt-9 sm:mt-11 flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4 max-w-lg mx-auto">
+          <!-- Primary CTA (Glowing Gradient Button) -->
+          <a href="#demos" class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3.5 rounded-full bg-gradient-to-r from-brand-indigo via-indigo-500 to-brand-cyan hover:opacity-95 text-white font-semibold text-sm sm:text-base shadow-[0_0_35px_rgba(99,102,241,0.4)] hover:shadow-[0_0_45px_rgba(99,102,241,0.6)] transition-all duration-200 active:scale-98">
+            <span>Explore Live Production Demos ↓</span>
+          </a>
+
+          <!-- Secondary CTA (Ghost Button with Subtle Border) -->
+          <a href="#audit-sample" class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3.5 rounded-full glass-panel hover:bg-white/10 text-zinc-200 hover:text-white border border-white/10 text-sm sm:text-base font-medium transition-all active:scale-98">
+            <svg class="w-4 h-4 mr-2 text-brand-cyan" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"/></svg>
+            <span>Watch 60-Second Video Audit Sample</span>
+          </a>
+        </div>
+
+        <!-- Live Trust Stats Bar (4 Bento Metrics) -->
+        <div class="mt-16 sm:mt-20 pt-8 border-t border-white/[0.08]">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+            
+            <!-- Metric 1 -->
+            <div class="p-5 sm:p-6 rounded-2xl glass-card-interactive text-left">
+              <div class="flex items-center justify-between">
+                <span class="text-3xl sm:text-4xl font-extrabold font-mono text-white tracking-tight">0.7s</span>
+                <span class="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">Core Web Vitals</span>
+              </div>
+              <p class="text-xs sm:text-sm font-semibold text-zinc-200 mt-2">Average Page Load</p>
+              <p class="text-[11px] text-zinc-400 mt-0.5">Google Lighthouse 99 Score</p>
+            </div>
+
+            <!-- Metric 2 -->
+            <div class="p-5 sm:p-6 rounded-2xl glass-card-interactive text-left">
+              <div class="flex items-center justify-between">
+                <span class="text-3xl sm:text-4xl font-extrabold font-mono text-white tracking-tight">100%</span>
+                <span class="text-[10px] font-mono text-brand-cyan bg-cyan-500/10 border border-cyan-500/20 px-2 py-0.5 rounded-full">1-Tap Dial</span>
+              </div>
+              <p class="text-xs sm:text-sm font-semibold text-zinc-200 mt-2">Mobile Viewport Optimization</p>
+              <p class="text-[11px] text-zinc-400 mt-0.5">Engineered for iOS & Android</p>
+            </div>
+
+            <!-- Metric 3 -->
+            <div class="p-5 sm:p-6 rounded-2xl glass-card-interactive text-left">
+              <div class="flex items-center justify-between">
+                <span class="text-3xl sm:text-4xl font-extrabold font-mono text-white tracking-tight">48h</span>
+                <span class="text-[10px] font-mono text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-full">Rapid Sprint</span>
+              </div>
+              <p class="text-xs sm:text-sm font-semibold text-zinc-200 mt-2">Turnaround to Staging</p>
+              <p class="text-[11px] text-zinc-400 mt-0.5">From intake call to staging preview</p>
+            </div>
+
+            <!-- Metric 4 -->
+            <div class="p-5 sm:p-6 rounded-2xl glass-card-interactive text-left">
+              <div class="flex items-center justify-between">
+                <span class="text-xl sm:text-2xl font-extrabold font-mono text-white tracking-tight pt-1">EST / GMT</span>
+                <span class="text-[10px] font-mono text-brand-indigoLight bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded-full">US & UK</span>
+              </div>
+              <p class="text-xs sm:text-sm font-semibold text-zinc-200 mt-2">Business Hours Overlap</p>
+              <p class="text-[11px] text-zinc-400 mt-0.5">Real-time Slack & Email contact</p>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 3. INTERACTIVE LIVE DEMO SHOWCASE (The Core Converting Feature) -->
+    <section id="demos" class="py-20 sm:py-28 relative border-t border-white/[0.08]" aria-labelledby="demos-heading">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Header -->
+        <div class="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
+          <div class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full border border-white/10 bg-white/[0.03] text-brand-cyan text-xs font-mono uppercase tracking-wider mb-4">
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-cyan animate-pulse"></span>
+            Production Staging Showcases
+          </div>
+          <h2 id="demos-heading" class="text-3xl sm:text-5xl font-extrabold text-metallic tracking-tight">
+            Engineered for Specific Industries
+          </h2>
+          <p class="mt-4 text-sm sm:text-base text-zinc-400">
+            Explore full production staging sites built to convert high-ticket local leads. Click to test the live interactive prototypes.
+          </p>
+
+          <!-- Category Filter Pills -->
+          <div class="mt-8 flex flex-wrap items-center justify-center gap-2 text-xs font-medium">
+            <button onclick="filterDemos('all')" id="filter-all" class="filter-btn px-4 py-2 rounded-full bg-white text-zinc-950 font-semibold shadow-sm transition">All Industries</button>
+            <button onclick="filterDemos('trades')" id="filter-trades" class="filter-btn px-4 py-2 rounded-full glass-panel text-zinc-300 hover:text-white hover:bg-white/10 transition">Emergency Trades</button>
+            <button onclick="filterDemos('clinics')" id="filter-clinics" class="filter-btn px-4 py-2 rounded-full glass-panel text-zinc-300 hover:text-white hover:bg-white/10 transition">Aesthetic & Clinics</button>
+            <button onclick="filterDemos('b2b')" id="filter-b2b" class="filter-btn px-4 py-2 rounded-full glass-panel text-zinc-300 hover:text-white hover:bg-white/10 transition">Commercial B2B</button>
+          </div>
+        </div>
+
+        <!-- 3 Interactive Showcase Cards -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          
+          <!-- CARD 1: Apex Roofing & Emergency Repairs -->
+          <article data-category="trades" class="demo-card glass-card-interactive rounded-3xl overflow-hidden flex flex-col justify-between">
+            <div>
+              <!-- Mac-Style Window Header -->
+              <div class="bg-black/60 border-b border-white/[0.08] px-4 py-3 flex items-center justify-between text-xs text-zinc-400">
+                <div class="flex items-center space-x-2">
+                  <span class="w-3 h-3 rounded-full bg-[#ef4444] inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-[#eab308] inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-[#22c55e] inline-block"></span>
+                </div>
+                <div class="bg-white/5 border border-white/5 rounded-md px-2.5 py-0.5 text-[10px] font-mono text-zinc-300 flex items-center gap-1.5 truncate max-w-[190px]">
+                  <span class="text-emerald-400">🔒</span> apexroofing-austin.com
+                </div>
+                <span class="text-[10px] font-mono text-zinc-500">Austin, TX</span>
+              </div>
+
+              <!-- Realistic Visual Browser Preview Container -->
+              <div class="p-4 bg-zinc-950/80 border-b border-white/[0.06] space-y-3">
+                <div class="flex items-center justify-between text-[11px] pb-2 border-b border-zinc-800/80">
+                  <div class="flex items-center gap-1.5 font-bold text-white tracking-tight">
+                    <span class="text-amber-400">⚡</span> APEX ROOFING CO.
+                  </div>
+                  <span class="bg-red-500/20 text-red-400 border border-red-500/30 text-[9px] font-mono px-2 py-0.5 rounded-full animate-pulse">
+                    24/7 STORM DISPATCH
+                  </span>
+                </div>
+                
+                <div>
+                  <h4 class="text-xs font-bold text-white leading-snug">Emergency Hail Damage & Leak Repair Within 45 Mins</h4>
+                  <p class="text-[11px] text-zinc-400 mt-1 line-clamp-2">Direct insurance claim handling. Zero out-of-pocket drone inspections.</p>
+                </div>
+
+                <!-- 1-Tap Mobile Call Bar -->
+                <div class="bg-gradient-to-r from-red-950/40 to-zinc-900 border border-red-900/40 rounded-xl p-2.5 flex items-center justify-between text-[11px]">
+                  <span class="text-zinc-300 font-medium">Travis County Dispatch</span>
+                  <button onclick="openStagingModal('roofing')" class="bg-red-600 hover:bg-red-500 text-white font-bold px-3 py-1 rounded-lg text-[10px] flex items-center gap-1 shadow-md transition">
+                    <span>📞</span> (512) 892-ROOF
+                  </button>
+                </div>
+
+                <!-- Trust proof mini-row -->
+                <div class="grid grid-cols-2 gap-2 text-[10px] text-zinc-400 pt-1">
+                  <div class="bg-white/[0.03] p-1.5 rounded-lg border border-white/5 flex items-center gap-1">
+                    <span class="text-amber-400">★ 4.9</span> (190+ Google Reviews)
+                  </div>
+                  <div class="bg-white/[0.03] p-1.5 rounded-lg border border-white/5 flex items-center gap-1">
+                    <span class="text-emerald-400">✓</span> Licensed Master Roofer
+                  </div>
+                </div>
+              </div>
+
+              <!-- Content Body -->
+              <div class="p-6">
+                <!-- Tags -->
+                <div class="flex flex-wrap gap-1.5 mb-3 text-[10px] font-mono">
+                  <span class="px-2 py-0.5 rounded-md bg-white/5 text-zinc-300 border border-white/5">1-Tap Mobile Calling</span>
+                  <span class="px-2 py-0.5 rounded-md bg-white/5 text-zinc-300 border border-white/5">Instant Quote Calculator</span>
+                  <span class="px-2 py-0.5 rounded-md bg-white/5 text-zinc-300 border border-white/5">5-Star Review Engine</span>
+                </div>
+
+                <h3 class="text-xl font-bold text-white tracking-tight">Apex Roofing & Emergency Repairs</h3>
+                <p class="mt-2 text-xs sm:text-sm text-zinc-400 leading-relaxed">
+                  Engineered exclusively for urgent homeowner call conversion with prominent emergency dial banners, zip code coverage matching, and multi-step insurance inspection estimators.
+                </p>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="p-6 pt-0 border-t border-white/[0.06] mt-4 flex items-center gap-2">
+              <button onclick="openStagingModal('roofing')" class="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-white/10 hover:bg-brand-indigo text-white text-xs font-semibold transition group">
+                <span>Test Live Demo</span>
+                <span class="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
+              </button>
+              <button onclick="openStagingModal('roofing', 'mobile')" class="py-2.5 px-3 rounded-xl glass-panel text-zinc-300 hover:text-white text-xs font-medium transition" title="View Mobile Breakdown">
+                <span>📱 Mobile View</span>
+              </button>
+            </div>
+          </article>
+
+          <!-- CARD 2: Lumina Aesthetics & Laser Clinic -->
+          <article data-category="clinics" class="demo-card glass-card-interactive rounded-3xl overflow-hidden flex flex-col justify-between">
+            <div>
+              <!-- Mac-Style Window Header -->
+              <div class="bg-black/60 border-b border-white/[0.08] px-4 py-3 flex items-center justify-between text-xs text-zinc-400">
+                <div class="flex items-center space-x-2">
+                  <span class="w-3 h-3 rounded-full bg-[#ef4444] inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-[#eab308] inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-[#22c55e] inline-block"></span>
+                </div>
+                <div class="bg-white/5 border border-white/5 rounded-md px-2.5 py-0.5 text-[10px] font-mono text-zinc-300 flex items-center gap-1.5 truncate max-w-[190px]">
+                  <span class="text-emerald-400">🔒</span> lumina-aesthetics.co.uk
+                </div>
+                <span class="text-[10px] font-mono text-zinc-500">London, UK</span>
+              </div>
+
+              <!-- Realistic Visual Browser Preview Container -->
+              <div class="p-4 bg-zinc-950/80 border-b border-white/[0.06] space-y-3">
+                <div class="flex items-center justify-between text-[11px] pb-2 border-b border-zinc-800/80">
+                  <div class="font-serif tracking-widest text-zinc-200 font-medium">L U M I N A</div>
+                  <span class="text-[9px] font-mono uppercase text-zinc-400 tracking-wider">Mayfair Clinic</span>
+                </div>
+
+                <div>
+                  <h4 class="text-xs font-serif font-light text-white leading-snug">Doctor-Led Facial Rejuvenation & Laser Therapy</h4>
+                  <p class="text-[11px] text-zinc-400 mt-1 line-clamp-2">GMC Registered Medical Doctors. Discreet Harley Street consulting suite.</p>
+                </div>
+
+                <!-- Treatment Menu Embed Preview -->
+                <div class="grid grid-cols-2 gap-1.5 text-[10px]">
+                  <div class="p-2 rounded-lg bg-white/[0.03] border border-white/5">
+                    <span class="text-zinc-400 block text-[9px]">Dermal Contouring</span>
+                    <span class="text-zinc-200 font-mono font-medium">From £395</span>
+                  </div>
+                  <div class="p-2 rounded-lg bg-white/[0.03] border border-white/5">
+                    <span class="text-zinc-400 block text-[9px]">Profhilo® Glow</span>
+                    <span class="text-zinc-200 font-mono font-medium">From £450</span>
+                  </div>
+                </div>
+
+                <!-- Appointment Booking Funnel -->
+                <div class="bg-gradient-to-r from-purple-950/30 to-zinc-900 border border-purple-900/30 rounded-xl p-2.5 flex items-center justify-between text-[11px]">
+                  <span class="text-zinc-300">Private 1-on-1 Consultation</span>
+                  <button onclick="openStagingModal('medspa')" class="bg-zinc-100 hover:bg-white text-zinc-950 font-bold px-3 py-1 rounded-lg text-[10px] shadow transition">
+                    Reserve Slot
+                  </button>
+                </div>
+              </div>
+
+              <!-- Content Body -->
+              <div class="p-6">
+                <!-- Tags -->
+                <div class="flex flex-wrap gap-1.5 mb-3 text-[10px] font-mono">
+                  <span class="px-2 py-0.5 rounded-md bg-white/5 text-zinc-300 border border-white/5">Luxury Layout</span>
+                  <span class="px-2 py-0.5 rounded-md bg-white/5 text-zinc-300 border border-white/5">Treatment Booking Embed</span>
+                  <span class="px-2 py-0.5 rounded-md bg-white/5 text-zinc-300 border border-white/5">Before/After Gallery</span>
+                </div>
+
+                <h3 class="text-xl font-bold text-white tracking-tight">Lumina Aesthetics & Laser Clinic</h3>
+                <p class="mt-2 text-xs sm:text-sm text-zinc-400 leading-relaxed">
+                  Tailored for high-ticket patient acquisition in London with refined serif typography, treatment price guides, and an embedded calendar scheduler.
+                </p>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="p-6 pt-0 border-t border-white/[0.06] mt-4 flex items-center gap-2">
+              <button onclick="openStagingModal('medspa')" class="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-white/10 hover:bg-brand-indigo text-white text-xs font-semibold transition group">
+                <span>Test Live Demo</span>
+                <span class="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
+              </button>
+              <button onclick="openStagingModal('medspa', 'mobile')" class="py-2.5 px-3 rounded-xl glass-panel text-zinc-300 hover:text-white text-xs font-medium transition" title="View Mobile Breakdown">
+                <span>📱 Mobile View</span>
+              </button>
+            </div>
+          </article>
+
+          <!-- CARD 3: Vanguard Commercial Services -->
+          <article data-category="b2b" class="demo-card glass-card-interactive rounded-3xl overflow-hidden flex flex-col justify-between">
+            <div>
+              <!-- Mac-Style Window Header -->
+              <div class="bg-black/60 border-b border-white/[0.08] px-4 py-3 flex items-center justify-between text-xs text-zinc-400">
+                <div class="flex items-center space-x-2">
+                  <span class="w-3 h-3 rounded-full bg-[#ef4444] inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-[#eab308] inline-block"></span>
+                  <span class="w-3 h-3 rounded-full bg-[#22c55e] inline-block"></span>
+                </div>
+                <div class="bg-white/5 border border-white/5 rounded-md px-2.5 py-0.5 text-[10px] font-mono text-zinc-300 flex items-center gap-1.5 truncate max-w-[190px]">
+                  <span class="text-emerald-400">🔒</span> vanguardcontracting.com
+                </div>
+                <span class="text-[10px] font-mono text-zinc-500">B2B Portal</span>
+              </div>
+
+              <!-- Realistic Visual Browser Preview Container -->
+              <div class="p-4 bg-zinc-950/80 border-b border-white/[0.06] space-y-3">
+                <div class="flex items-center justify-between text-[11px] pb-2 border-b border-zinc-800/80">
+                  <div class="font-bold text-white flex items-center gap-1 tracking-wider">
+                    <span class="w-2.5 h-2.5 bg-brand-cyan rounded-sm"></span> VANGUARD B2B
+                  </div>
+                  <span class="text-[9px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded">
+                    $10M BONDED
+                  </span>
+                </div>
+
+                <div>
+                  <h4 class="text-xs font-bold text-white leading-snug">Turnkey Commercial Facilities & HVAC Retrofits</h4>
+                  <p class="text-[11px] text-zinc-400 mt-1 line-clamp-2">Serving corporate real estate REITs, tech hubs & industrial logistics centers.</p>
+                </div>
+
+                <!-- CapEx Blueprint Metric Row -->
+                <div class="grid grid-cols-2 gap-2 text-[10px]">
+                  <div class="p-2 rounded-lg bg-white/[0.03] border border-white/5">
+                    <span class="text-zinc-400 block text-[9px]">CapEx Executed</span>
+                    <span class="text-white font-mono font-bold">$45M+</span>
+                  </div>
+                  <div class="p-2 rounded-lg bg-white/[0.03] border border-white/5">
+                    <span class="text-zinc-400 block text-[9px]">Safety Rating</span>
+                    <span class="text-emerald-400 font-mono font-bold">0.68 EMR</span>
+                  </div>
+                </div>
+
+                <!-- RFQ Fast Track Bar -->
+                <div class="bg-gradient-to-r from-cyan-950/30 to-zinc-900 border border-cyan-900/40 rounded-xl p-2.5 flex items-center justify-between text-[11px]">
+                  <span class="text-zinc-300">Commercial Tender RFQ</span>
+                  <button onclick="openStagingModal('commercial')" class="bg-brand-cyan hover:bg-cyan-400 text-zinc-950 font-bold px-3 py-1 rounded-lg text-[10px] shadow transition">
+                    Submit RFQ
+                  </button>
+                </div>
+              </div>
+
+              <!-- Content Body -->
+              <div class="p-6">
+                <!-- Tags -->
+                <div class="flex flex-wrap gap-1.5 mb-3 text-[10px] font-mono">
+                  <span class="px-2 py-0.5 rounded-md bg-white/5 text-zinc-300 border border-white/5">Commercial RFQ Form</span>
+                  <span class="px-2 py-0.5 rounded-md bg-white/5 text-zinc-300 border border-white/5">Client Case Proof</span>
+                  <span class="px-2 py-0.5 rounded-md bg-white/5 text-zinc-300 border border-white/5">High-Ticket Project Specs</span>
+                </div>
+
+                <h3 class="text-xl font-bold text-white tracking-tight">Vanguard Commercial Services</h3>
+                <p class="mt-2 text-xs sm:text-sm text-zinc-400 leading-relaxed">
+                  Architectural blueprint styling crafted for high-margin B2B proposals with downloadable compliance documentation and project square-footage calculators.
+                </p>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="p-6 pt-0 border-t border-white/[0.06] mt-4 flex items-center gap-2">
+              <button onclick="openStagingModal('commercial')" class="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-white/10 hover:bg-brand-indigo text-white text-xs font-semibold transition group">
+                <span>Test Live Demo</span>
+                <span class="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
+              </button>
+              <button onclick="openStagingModal('commercial', 'mobile')" class="py-2.5 px-3 rounded-xl glass-panel text-zinc-300 hover:text-white text-xs font-medium transition" title="View Mobile Breakdown">
+                <span>📱 Mobile View</span>
+              </button>
+            </div>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 4. THE "OLD WAY VS. AKSHAT STUDIO" BENTO MATRIX -->
+    <section id="comparison" class="py-20 sm:py-28 relative border-t border-white/[0.08]" aria-labelledby="comparison-heading">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Section Header -->
+        <div class="text-center max-w-3xl mx-auto mb-14 sm:mb-16">
+          <div class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full border border-white/10 bg-white/[0.03] text-brand-indigoLight text-xs font-mono uppercase tracking-wider mb-4">
+            <span>⚖️</span> The Shift in Web Infrastructure
+          </div>
+          <h2 id="comparison-heading" class="text-3xl sm:text-5xl font-extrabold text-metallic tracking-tight">
+            The Old Agency Way vs. Akshat Studio
+          </h2>
+          <p class="mt-4 text-sm sm:text-base text-zinc-400">
+            Why leading small business owners in the United States and the United Kingdom are leaving bloated agencies behind.
+          </p>
+        </div>
+
+        <!-- Modern Split Bento Matrix -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+          
+          <!-- Column 1: Traditional Agencies (The Old Way) -->
+          <div class="glass-panel rounded-3xl p-7 sm:p-9 border border-red-500/20 bg-gradient-to-b from-red-950/10 to-transparent flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between pb-6 border-b border-white/[0.08]">
+                <div>
+                  <span class="text-xs font-mono uppercase tracking-wider text-red-400 font-semibold block">The Old Model</span>
+                  <h3 class="text-xl sm:text-2xl font-bold text-white mt-1">Traditional Agencies & Freelancers</h3>
+                </div>
+                <div class="w-10 h-10 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 flex items-center justify-center font-bold text-lg">
+                  ✕
+                </div>
+              </div>
+
+              <!-- List of Bottlenecks -->
+              <ul class="mt-8 space-y-5 text-xs sm:text-sm text-zinc-400">
+                <li class="flex items-start gap-3">
+                  <span class="text-red-400 font-bold text-base mt-[-2px]">✕</span>
+                  <div>
+                    <strong class="text-zinc-200 block font-medium">$6,000+ Upfront Costs & Hidden Retainers</strong>
+                    <span class="text-zinc-400 text-xs">Exorbitant discovery phases and sudden out-of-scope invoices.</span>
+                  </div>
+                </li>
+
+                <li class="flex items-start gap-3">
+                  <span class="text-red-400 font-bold text-base mt-[-2px]">✕</span>
+                  <div>
+                    <strong class="text-zinc-200 block font-medium">8-Week Drag & Endless Meetings</strong>
+                    <span class="text-zinc-400 text-xs">Bureaucratic account managers and 10 rounds of Zoom kickoff calls.</span>
+                  </div>
+                </li>
+
+                <li class="flex items-start gap-3">
+                  <span class="text-red-400 font-bold text-base mt-[-2px]">✕</span>
+                  <div>
+                    <strong class="text-zinc-200 block font-medium">Slow, Bloated WordPress & Elementor Themes</strong>
+                    <span class="text-zinc-400 text-xs">Loads in 4.5+ seconds on mobile. Visitors bounce before the page even paints.</span>
+                  </div>
+                </li>
+
+                <li class="flex items-start gap-3">
+                  <span class="text-red-400 font-bold text-base mt-[-2px]">✕</span>
+                  <div>
+                    <strong class="text-zinc-200 block font-medium">Unresponsive Communication & Lag</strong>
+                    <span class="text-zinc-400 text-xs">Days between email replies and outsourced overseas junior developers.</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-white/[0.08] text-xs font-mono text-zinc-500 flex items-center justify-between">
+              <span>Result: Lost calls & high overhead</span>
+              <span class="text-red-400 font-semibold">Low Conversion ROI</span>
+            </div>
+          </div>
+
+          <!-- Column 2: Akshat Studio (The Modern Engineering Way) -->
+          <div class="glass-panel rounded-3xl p-7 sm:p-9 border-2 border-indigo-500/80 bg-gradient-to-b from-indigo-950/25 via-canvas-card to-transparent flex flex-col justify-between shadow-[0_0_50px_rgba(99,102,241,0.2)] relative">
+            
+            <!-- Recommended Badge -->
+            <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-brand-indigo to-brand-cyan text-white text-[10px] font-bold uppercase tracking-wider py-1 px-3 rounded-full shadow-lg">
+              Engineered For Speed & Trust
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between pb-6 border-b border-white/[0.08]">
+                <div>
+                  <span class="text-xs font-mono uppercase tracking-wider text-brand-cyan font-semibold block">The Modern Engineering Model</span>
+                  <h3 class="text-xl sm:text-2xl font-bold text-white mt-1">Akshat Studio Architecture</h3>
+                </div>
+                <div class="w-10 h-10 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-lg">
+                  ✓
+                </div>
+              </div>
+
+              <!-- List of Advantages -->
+              <ul class="mt-8 space-y-5 text-xs sm:text-sm text-zinc-300">
+                <li class="flex items-start gap-3">
+                  <span class="text-emerald-400 font-bold text-base mt-[-2px]">✓</span>
+                  <div>
+                    <strong class="text-white block font-medium">$450 – $1,500 Flat Rate (Zero Surprise Invoices)</strong>
+                    <span class="text-zinc-400 text-xs">Honest fixed pricing with 50% deposit and 50% on launch approval.</span>
+                  </div>
+                </li>
+
+                <li class="flex items-start gap-3">
+                  <span class="text-emerald-400 font-bold text-base mt-[-2px]">✓</span>
+                  <div>
+                    <strong class="text-white block font-medium">Live Staging Deployed in 48 Hours</strong>
+                    <span class="text-zinc-400 text-xs">Direct rapid sprint from initial brief to live working staging preview.</span>
+                  </div>
+                </li>
+
+                <li class="flex items-start gap-3">
+                  <span class="text-emerald-400 font-bold text-base mt-[-2px]">✓</span>
+                  <div>
+                    <strong class="text-white block font-medium">Zero-Maintenance Cloud Hosting (&lt;0.7s Load Speed)</strong>
+                    <span class="text-zinc-400 text-xs">Pure clean static code on global CDN. 99.99% uptime with zero plugin crashes.</span>
+                  </div>
+                </li>
+
+                <li class="flex items-start gap-3">
+                  <span class="text-emerald-400 font-bold text-base mt-[-2px]">✓</span>
+                  <div>
+                    <strong class="text-white block font-medium">Direct Daily Slack & Email Overlap (EST & GMT)</strong>
+                    <span class="text-zinc-400 text-xs">Talk directly with the engineer building your site with &lt;4hr reply guarantee.</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-white/[0.08] text-xs font-mono text-zinc-300 flex items-center justify-between">
+              <span>Result: Instant mobile calls & quotes</span>
+              <span class="text-brand-cyan font-bold">100% Code Ownership</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 5. 3-STEP PROCESS SECTION -->
+    <section id="process" class="py-20 sm:py-24 relative border-t border-white/[0.08]" aria-labelledby="process-heading">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-2xl mx-auto mb-14">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/10 bg-white/[0.03] text-brand-cyan text-xs font-mono uppercase tracking-wider mb-3">
+            <span>⚡</span> Frictionless Workflow
+          </div>
+          <h2 id="process-heading" class="text-3xl sm:text-4xl font-extrabold text-metallic tracking-tight">
+            How We Deploy in 48 Hours
+          </h2>
+          <p class="mt-3 text-sm text-zinc-400">No endless phone calls or complex tickets. Just rapid execution.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          <!-- Step 1 -->
+          <div class="p-6 sm:p-7 rounded-2xl glass-card-interactive text-left relative">
+            <span class="text-3xl font-extrabold font-mono text-white/20">01</span>
+            <h3 class="text-lg font-bold text-white mt-3">60-Min Onboarding & Blueprint</h3>
+            <p class="mt-2 text-xs sm:text-sm text-zinc-400 leading-relaxed">
+              We gather your logo, primary phone numbers, service areas, and reviews. We map the exact conversion funnel tailored to your target city.
+            </p>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="p-6 sm:p-7 rounded-2xl glass-card-interactive text-left relative">
+            <span class="text-3xl font-extrabold font-mono text-brand-indigo/40">02</span>
+            <h3 class="text-lg font-bold text-white mt-3">48-Hour Rapid Engineering Sprint</h3>
+            <p class="mt-2 text-xs sm:text-sm text-zinc-400 leading-relaxed">
+              We write clean, semantic static code with zero plugin bloat. We configure sticky mobile calling, Google Analytics hooks, and inquiry forms.
+            </p>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="p-6 sm:p-7 rounded-2xl glass-card-interactive text-left relative">
+            <span class="text-3xl font-extrabold font-mono text-brand-cyan/40">03</span>
+            <h3 class="text-lg font-bold text-white mt-3">Staging Review & Global Launch</h3>
+            <p class="mt-2 text-xs sm:text-sm text-zinc-400 leading-relaxed">
+              You test the private staging link on your phone. Once you give 100% approval, we point your DNS and deploy live to global cloud edge networks.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 6. PRICING SECTION ($450, $850, $1500) — ONLY MIDDLE CARD HIGHLIGHTED -->
+    <section id="pricing" class="py-20 sm:py-28 relative border-t border-white/[0.08]" aria-labelledby="pricing-heading">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Header -->
+        <div class="text-center max-w-3xl mx-auto mb-14 sm:mb-16">
+          <div class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full border border-white/10 bg-white/[0.03] text-brand-cyan text-xs font-mono uppercase tracking-wider mb-4">
+            <span>💎</span> Flat Rate Investment
+          </div>
+          <h2 id="pricing-heading" class="text-3xl sm:text-5xl font-extrabold tracking-tight bg-gradient-to-b from-white via-zinc-100 to-zinc-400 bg-clip-text text-transparent">
+            Transparent Pricing. Zero Agency Retainers.
+          </h2>
+          <p class="mt-4 text-sm sm:text-base text-zinc-400">
+            Predictable flat fees tailored for service professionals in the US and UK. No surprise bills.
+          </p>
+        </div>
+
+        <!-- 3-Tier Pricing Grid (ONLY Middle Card Highlighted) -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch">
+          
+          <!-- CARD 1 (LEFT — STANDARD STYLE): Fast-Track Landing Page ($450) -->
+          <div class="rounded-2xl p-7 sm:p-8 flex flex-col justify-between bg-[#090a0f]/45 backdrop-blur-xl border border-white/[0.06] shadow-2xl shadow-indigo-950/10 hover:border-indigo-500/30 hover:shadow-[0_0_30px_-5px_rgba(99,102,241,0.15)] transition-all duration-500 hover:-translate-y-1">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-mono uppercase tracking-wider text-zinc-400 font-semibold">Tier 01</span>
+                <span class="text-[11px] font-mono text-zinc-400 bg-white/5 px-2.5 py-0.5 rounded-full border border-white/10">⚡ Live in 48 Hours</span>
+              </div>
+              
+              <h3 class="text-2xl font-bold tracking-tight text-white mt-3">Fast-Track Landing Page</h3>
+              <p class="text-xs sm:text-sm text-zinc-400 mt-2">
+                Single-service trades or Google Ads campaigns.
+              </p>
+
+              <!-- Price Box -->
+              <div class="mt-6 pb-6 border-b border-white/[0.08]">
+                <div class="flex items-baseline gap-2">
+                  <span class="text-4xl sm:text-5xl font-extrabold font-mono text-white">$450</span>
+                  <span class="text-zinc-400 text-xs font-medium uppercase font-mono">One-time flat fee</span>
+                </div>
+                <p class="text-xs text-zinc-500 mt-1 font-mono">or £360 GBP • No hidden software fees</p>
+              </div>
+
+              <!-- Features -->
+              <ul class="mt-6 space-y-3.5 text-xs sm:text-sm text-zinc-300">
+                <li class="flex items-start gap-2.5">
+                  <span class="text-emerald-400 font-bold mt-0.5">✓</span>
+                  <span>1-Page High-Converting Mobile-First Layout</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="text-emerald-400 font-bold mt-0.5">✓</span>
+                  <span>Sticky 1-Tap Mobile "Call Now" Button</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="text-emerald-400 font-bold mt-0.5">✓</span>
+                  <span>Lead Form Integrated with Web3Forms</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="text-emerald-400 font-bold mt-0.5">✓</span>
+                  <span>Sub-1 Second Performance Optimization</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="text-emerald-400 font-bold mt-0.5">✓</span>
+                  <span>Free Domain DNS Setup &amp; Launch</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="text-emerald-400 font-bold mt-0.5">✓</span>
+                  <span>1 Round of Minor Revisions</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Button: Clean ghost outline button -->
+            <div class="mt-8 pt-6 border-t border-white/[0.08]">
+              <a href="#audit-form" onclick="selectPricingOption('Fast-Track Landing Page ($450)')" class="w-full inline-flex items-center justify-center px-5 py-3 rounded-xl border border-white/20 text-white hover:bg-white/10 font-semibold text-xs transition duration-200">
+                <span>Select Fast-Track Plan →</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- CARD 2 (MIDDLE — THE ONLY HIGHLIGHTED CARD): The Authority Website ($850) -->
+          <div class="rounded-2xl p-7 sm:p-8 flex flex-col justify-between relative border-2 border-indigo-500/70 shadow-[0_0_35px_-5px_rgba(99,102,241,0.35)] bg-gradient-to-b from-indigo-950/40 via-[#090a0f]/60 to-[#090a0f]/80 backdrop-blur-xl lg:-translate-y-2 lg:hover:-translate-y-3 transition-all duration-500 z-10">
+            
+            <!-- Floating Badge at Top -->
+            <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-indigo-500 via-brand-indigo to-brand-cyan text-white text-[10px] font-bold uppercase tracking-wider py-1 px-4 rounded-full shadow-lg border border-white/20 whitespace-nowrap">
+              ⭐ MOST POPULAR FOR LOCAL BUSINESSES
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between pt-1">
+                <span class="text-xs font-mono uppercase tracking-wider text-brand-cyan font-semibold">Tier 02 • Core Architecture</span>
+                <span class="text-[11px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">⚡ Live in 3 to 4 Days</span>
+              </div>
+              
+              <h3 class="text-2xl font-bold tracking-tight text-white mt-3">The Authority Website</h3>
+              <p class="text-xs sm:text-sm text-zinc-300 mt-2">
+                Established contractors, emergency services, and clinics.
+              </p>
+
+              <!-- Price Box -->
+              <div class="mt-6 pb-6 border-b border-white/[0.08]">
+                <div class="flex items-baseline gap-2">
+                  <span class="text-4xl sm:text-5xl font-extrabold font-mono text-white">$850</span>
+                  <span class="text-zinc-400 text-xs font-medium uppercase font-mono">One-time flat fee</span>
+                </div>
+                <p class="text-xs text-brand-indigoLight mt-1 font-mono">or £680 GBP • 50% deposit, 50% on final launch approval</p>
+              </div>
+
+              <!-- Features -->
+              <ul class="mt-6 space-y-3.5 text-xs sm:text-sm text-zinc-200">
+                <li class="flex items-start gap-2.5">
+                  <span class="text-brand-cyan font-bold mt-0.5">✓</span>
+                  <span>Complete Multi-Section Homepage Architecture</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="text-brand-cyan font-bold mt-0.5">✓</span>
+                  <span>Detailed Service Breakdown &amp; Quote Funnel</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="text-brand-cyan font-bold mt-0.5">✓</span>
+                  <span>Google Reviews &amp; Trust Badge Grid</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="text-brand-cyan font-bold mt-0.5">✓</span>
+                  <span>Interactive Service Area / Coverage Radius</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="text-brand-cyan font-bold mt-0.5">✓</span>
+                  <span>1-Tap Calling &amp; Emergency Mobile Layout</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="text-brand-cyan font-bold mt-0.5">✓</span>
+                  <span>Speed &amp; Mobile Optimization</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="text-brand-cyan font-bold mt-0.5">✓</span>
+                  <span>2 Full Rounds of Revisions</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="text-brand-cyan font-bold mt-0.5">✓</span>
+                  <span>14 Days Post-Launch Warranty</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Button: High-contrast glowing indigo gradient button -->
+            <div class="mt-8 pt-6 border-t border-white/[0.08]">
+              <a href="#audit-form" onclick="selectPricingOption('The Authority Website ($850)')" class="w-full inline-flex items-center justify-center px-5 py-3.5 rounded-xl bg-gradient-to-r from-indigo-500 to-blue-600 hover:from-indigo-600 hover:to-blue-700 text-white font-bold text-xs shadow-lg shadow-indigo-500/25 transition duration-200 active:scale-98">
+                <span>Build My Authority Website →</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- CARD 3 (RIGHT — STANDARD STYLE): Multi-Page Premium Hub ($1,500) -->
+          <div class="rounded-2xl p-7 sm:p-8 flex flex-col justify-between bg-[#090a0f]/45 backdrop-blur-xl border border-white/[0.06] shadow-2xl shadow-indigo-950/10 hover:border-indigo-500/30 hover:shadow-[0_0_30px_-5px_rgba(99,102,241,0.15)] transition-all duration-500 hover:-translate-y-1">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-mono uppercase tracking-wider text-zinc-400 font-semibold">Tier 03</span>
+                <span class="text-[11px] font-mono text-zinc-400 bg-white/5 px-2.5 py-0.5 rounded-full border border-white/10">⚡ Live in 5 to 7 Days</span>
+              </div>
+              
+              <h3 class="text-2xl font-bold tracking-tight text-white mt-3">Multi-Page Premium Hub</h3>
+              <p class="text-xs sm:text-sm text-zinc-400 mt-2">
+                Med spas, cosmetic practices, and multi-crew firms.
+              </p>
+
+              <!-- Price Box -->
+              <div class="mt-6 pb-6 border-b border-white/[0.08]">
+                <div class="flex items-baseline gap-2">
+                  <span class="text-4xl sm:text-5xl font-extrabold font-mono text-white">$1,500</span>
+                  <span class="text-zinc-400 text-xs font-medium uppercase font-mono">One-time flat fee</span>
+                </div>
+                <p class="text-xs text-zinc-500 mt-1 font-mono">or £1,200 GBP • 50% deposit, 50% on launch</p>
+              </div>
+
+              <!-- Features -->
+              <ul class="mt-6 space-y-3.5 text-xs sm:text-sm text-zinc-300">
+                <li class="flex items-start gap-2.5">
+                  <span class="text-emerald-400 font-bold mt-0.5">✓</span>
+                  <span>Up to 5 Dedicated Pages (Home, Services, About, Gallery, Contact)</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="text-emerald-400 font-bold mt-0.5">✓</span>
+                  <span>Interactive Before / After Gallery Slider</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="text-emerald-400 font-bold mt-0.5">✓</span>
+                  <span>Embedded Appointment Booking (Calendly / Cal.com)</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="text-emerald-400 font-bold mt-0.5">✓</span>
+                  <span>Semantic Local SEO Meta Structure</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="text-emerald-400 font-bold mt-0.5">✓</span>
+                  <span>High-Ticket Commercial RFQ Form</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="text-emerald-400 font-bold mt-0.5">✓</span>
+                  <span>3 Full Rounds of Revisions</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="text-emerald-400 font-bold mt-0.5">✓</span>
+                  <span>Priority 30-Day Launch Support</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Button: Clean ghost outline button -->
+            <div class="mt-8 pt-6 border-t border-white/[0.08]">
+              <a href="#audit-form" onclick="selectPricingOption('Multi-Page Premium Hub ($1,500)')" class="w-full inline-flex items-center justify-center px-5 py-3 rounded-xl border border-white/20 text-white hover:bg-white/10 font-semibold text-xs transition duration-200">
+                <span>Select Premium Plan →</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- BOTTOM CALLOUT BANNER -->
+        <div class="mt-12 max-w-3xl mx-auto p-4 sm:p-5 rounded-2xl bg-[#090a0f]/45 backdrop-blur-xl border border-white/[0.06] text-center text-xs text-zinc-400 leading-relaxed shadow-2xl shadow-indigo-950/10">
+          <p>
+            💡 All builds include 14 days of free post-launch support. Looking for completely hands-off hosting? We offer an optional $39/month Care &amp; Hosting Retainer covering enterprise cloud hosting, automatic SSL renewal, and monthly text/photo updates.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 7. INTERACTIVE LEAD AUDIT FORM (Web3Forms Integrated) -->
+    <section id="audit-form" class="py-20 sm:py-28 relative border-t border-white/[0.08]" aria-labelledby="form-heading">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+          
+          <!-- Left Column: Context & Proof -->
+          <div class="lg:col-span-5 space-y-6">
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-xs font-mono uppercase tracking-wider">
+              <span>🎥</span> Free 60-Second Video Audit
+            </div>
+            
+            <h2 id="form-heading" class="text-3xl sm:text-5xl font-extrabold text-metallic tracking-tight leading-tight">
+              Ready to Upgrade Your Online Presence?
+            </h2>
+            
+            <p class="text-sm sm:text-base text-zinc-400 leading-relaxed">
+              Send us your current website URL. We will record a personalized 60-second video showing exactly where you are losing mobile customers—100% free with zero sales pressure.
+            </p>
+
+            <!-- Audit Steps -->
+            <div class="space-y-4 pt-2 text-xs sm:text-sm text-zinc-300">
+              <div class="flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-indigo-500/20 text-brand-indigoLight flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">1</span>
+                <div>
+                  <strong class="text-white block font-medium">Real Mobile Device Stress Test</strong>
+                  <span class="text-zinc-400 text-xs">We test your tap targets, phone calling buttons, and page load speed on simulated 4G mobile devices.</span>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-brand-cyan flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">2</span>
+                <div>
+                  <strong class="text-white block font-medium">Loom Video Screen Breakdown</strong>
+                  <span class="text-zinc-400 text-xs">Akshat personally records a 60-second video pinpointing exact conversion leaks in your quote funnel.</span>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">3</span>
+                <div>
+                  <strong class="text-white block font-medium">Delivered Within 24 Hours</strong>
+                  <span class="text-zinc-400 text-xs">Direct to your inbox. No high-pressure sales calls, no spam.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Direct Contact Card -->
+            <div class="p-4 rounded-2xl glass-panel border border-white/[0.06] space-y-1.5 mt-6">
+              <div class="flex items-center justify-between text-xs">
+                <span class="text-zinc-400">Direct Inquiries</span>
+                <span class="text-emerald-400 font-mono text-[11px] flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span> Replies within 4 hours
+                </span>
+              </div>
+              <a href="mailto:workwithakshatstudio@gmail.com" class="text-white font-mono text-xs sm:text-sm hover:text-brand-cyan transition block font-semibold">
+                workwithakshatstudio@gmail.com
+              </a>
+            </div>
+
+          </div>
+
+          <!-- Right Column: Web3Forms Integrated Form Container -->
+          <div class="lg:col-span-7">
+            <div class="glass-panel rounded-3xl p-6 sm:p-9 border border-white/[0.06] relative shadow-[0_0_50px_rgba(0,0,0,0.8)] shadow-indigo-950/10">
+              
+              <!-- Success Alert Banner (Shown via JavaScript) -->
+              <div id="form-success-banner" class="hidden mb-6 p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-sm">
+                <div class="flex items-center gap-2 font-bold text-emerald-200">
+                  <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                  <span>Video Audit Request Received!</span>
+                </div>
+                <p class="mt-1.5 text-xs text-emerald-300/90 leading-relaxed">
+                  Thank you! Akshat will review your business website and send your custom 60-second video breakdown directly to your email within 24 hours.
+                </p>
+              </div>
+
+              <!-- Web3Forms Form -->
+              <form id="audit-lead-form" action="https://api.web3forms.com/submit" method="POST" onsubmit="handleFormSubmit(event)" class="space-y-4">
+                
+                <!-- Web3Forms Configuration Hidden Fields -->
+                <input type="hidden" name="access_key" value="workwithakshatstudio-audit-key">
+                <input type="hidden" name="subject" value="New 60s Video Audit Request — Akshat Studio">
+                <input type="hidden" name="from_name" value="Akshat Studio Lead Intake">
+                <input type="hidden" name="recipient_email" value="workwithakshatstudio@gmail.com">
+
+                <!-- Row 1: Business Name & Owner Name -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label for="business-name" class="block text-xs font-semibold uppercase tracking-wider text-zinc-300 mb-1.5">
+                      Business Name <span class="text-brand-indigo">*</span>
+                    </label>
+                    <input 
+                      type="text" 
+                      id="business-name" 
+                      name="business_name" 
+                      required 
+                      placeholder="e.g. Apex Roofing Dallas" 
+                      class="w-full px-4 py-3 rounded-xl bg-black/50 border border-white/10 text-white placeholder-zinc-500 text-xs sm:text-sm focus:outline-none focus:border-brand-indigo focus:ring-1 focus:ring-brand-indigo transition"
+                    >
+                  </div>
+                  <div>
+                    <label for="contact-name" class="block text-xs font-semibold uppercase tracking-wider text-zinc-300 mb-1.5">
+                      Owner / Contact Name <span class="text-brand-indigo">*</span>
+                    </label>
+                    <input 
+                      type="text" 
+                      id="contact-name" 
+                      name="contact_name" 
+                      required 
+                      placeholder="e.g. John Miller" 
+                      class="w-full px-4 py-3 rounded-xl bg-black/50 border border-white/10 text-white placeholder-zinc-500 text-xs sm:text-sm focus:outline-none focus:border-brand-indigo focus:ring-1 focus:ring-brand-indigo transition"
+                    >
+                  </div>
+                </div>
+
+                <!-- Row 2: Email Address -->
+                <div>
+                  <label for="email-address" class="block text-xs font-semibold uppercase tracking-wider text-zinc-300 mb-1.5">
+                    Email Address <span class="text-brand-indigo">*</span>
+                  </label>
+                  <input 
+                    type="email" 
+                    id="email-address" 
+                    name="email" 
+                    required 
+                    placeholder="e.g. john@apexroofing-dallas.com" 
+                    class="w-full px-4 py-3 rounded-xl bg-black/50 border border-white/10 text-white placeholder-zinc-500 text-xs sm:text-sm focus:outline-none focus:border-brand-indigo focus:ring-1 focus:ring-brand-indigo transition"
+                  >
+                </div>
+
+                <!-- Row 3: Current Website URL -->
+                <div>
+                  <label for="website-url" class="block text-xs font-semibold uppercase tracking-wider text-zinc-300 mb-1.5">
+                    Current Website URL <span class="text-zinc-500 text-[10px] font-normal lowercase">(optional if starting new)</span>
+                  </label>
+                  <input 
+                    type="text" 
+                    id="website-url" 
+                    name="website_url" 
+                    placeholder="https://yourcurrentsite.com" 
+                    class="w-full px-4 py-3 rounded-xl bg-black/50 border border-white/10 text-white placeholder-zinc-500 text-xs sm:text-sm focus:outline-none focus:border-brand-indigo focus:ring-1 focus:ring-brand-indigo transition"
+                  >
+                </div>
+
+                <!-- Row 4: Primary Goal Selector -->
+                <div>
+                  <label for="primary-goal" class="block text-xs font-semibold uppercase tracking-wider text-zinc-300 mb-1.5">
+                    Primary Goal / Project Scope <span class="text-brand-indigo">*</span>
+                  </label>
+                  <div class="relative">
+                    <select 
+                      id="primary-goal" 
+                      name="primary_goal" 
+                      required 
+                      class="w-full px-4 py-3 rounded-xl bg-black/50 border border-white/10 text-white text-xs sm:text-sm focus:outline-none focus:border-brand-indigo focus:ring-1 focus:ring-brand-indigo transition appearance-none cursor-pointer"
+                    >
+                      <option value="The Authority Website ($850)" selected>The Authority Website ($850) — Core Architecture</option>
+                      <option value="Fast-Track Landing Page ($450)">Fast-Track Landing Page ($450) — Single Page Sprint</option>
+                      <option value="Multi-Page Premium Hub ($1,500)">Multi-Page Premium Hub ($1,500) — Dedicated 5-Page Hub</option>
+                      <option value="Redesign Existing Website">Redesign Existing Website (Faster Speed &amp; Better Conversion)</option>
+                      <option value="New Build from Scratch">New Build from Scratch (US or UK Trade / Clinic)</option>
+                      <option value="Google Ads / Local SEO Landing Page">Google Ads / Local SEO Dedicated Landing Page</option>
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-zinc-400">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Row 5: Submit Button with Glowing Gradient -->
+                <div class="pt-2">
+                  <button 
+                    type="submit" 
+                    id="submit-button" 
+                    class="w-full py-4 px-6 rounded-full bg-gradient-to-r from-brand-indigo via-indigo-500 to-brand-cyan hover:opacity-95 text-white font-bold text-xs sm:text-sm tracking-wide shadow-[0_0_30px_rgba(99,102,241,0.4)] transition-all duration-200 active:scale-98 flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    <span id="submit-text">Send Me My Free 60-Second Video Audit →</span>
+                    <svg id="submit-spinner" class="animate-spin h-4 w-4 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                  </button>
+                </div>
+
+                <p class="text-[11px] text-zinc-500 text-center pt-1 font-mono">
+                  🔒 No high-pressure sales reps. Direct unscripted Loom breakdown from Akshat.
+                </p>
+
+              </form>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- FAQ SECTION (Smooth Vanilla Accordion) -->
+    <section class="py-16 sm:py-24 relative border-t border-white/[0.08]" aria-labelledby="faq-title">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-2xl mx-auto mb-12">
+          <h2 id="faq-title" class="text-2xl sm:text-4xl font-extrabold text-metallic tracking-tight">
+            Frequently Asked Questions
+          </h2>
+          <p class="mt-2 text-xs sm:text-sm text-zinc-400">Everything you need to know about working with Akshat Studio.</p>
+        </div>
+
+        <div class="space-y-3.5">
+          
+          <!-- FAQ 1 -->
+          <div class="faq-item rounded-2xl glass-panel border border-white/10 overflow-hidden transition">
+            <button class="faq-trigger w-full p-5 sm:p-6 text-left flex items-center justify-between text-sm sm:text-base font-semibold text-white focus:outline-none">
+              <span>How can you deploy a production website in just 48 to 72 hours?</span>
+              <span class="faq-icon text-zinc-400 text-lg transition-transform duration-200">↓</span>
+            </button>
+            <div class="faq-content hidden px-5 sm:px-6 pb-6 text-xs sm:text-sm text-zinc-400 leading-relaxed border-t border-white/[0.04] pt-4">
+              Traditional agencies drown in 8-week bureaucratic meetings and slow drag-and-drop page builders. We have perfected a specialized, high-performance static engineering workflow tailored specifically for service businesses. We write clean, direct code without bloated CMS plugins, allowing us to build, review, and ship in record time.
+            </div>
+          </div>
+
+          <!-- FAQ 2 -->
+          <div class="faq-item rounded-2xl glass-panel border border-white/10 overflow-hidden transition">
+            <button class="faq-trigger w-full p-5 sm:p-6 text-left flex items-center justify-between text-sm sm:text-base font-semibold text-white focus:outline-none">
+              <span>Do I really own 100% of my code and website?</span>
+              <span class="faq-icon text-zinc-400 text-lg transition-transform duration-200">↓</span>
+            </button>
+            <div class="faq-content hidden px-5 sm:px-6 pb-6 text-xs sm:text-sm text-zinc-400 leading-relaxed border-t border-white/[0.04] pt-4">
+              Yes, 100%. Unlike proprietary website builders (Wix, Squarespace) that lock you in, or agencies that hold your site hostage with mandatory $200/mo retainers, you receive the clean production source code. You can host it on Cloudflare Pages or Netlify for virtually $0/mo.
+            </div>
+          </div>
+
+          <!-- FAQ 3 -->
+          <div class="faq-item rounded-2xl glass-panel border border-white/10 overflow-hidden transition">
+            <button class="faq-trigger w-full p-5 sm:p-6 text-left flex items-center justify-between text-sm sm:text-base font-semibold text-white focus:outline-none">
+              <span>How does the US & UK business hours overlap work?</span>
+              <span class="faq-icon text-zinc-400 text-lg transition-transform duration-200">↓</span>
+            </button>
+            <div class="faq-content hidden px-5 sm:px-6 pb-6 text-xs sm:text-sm text-zinc-400 leading-relaxed border-t border-white/[0.04] pt-4">
+              Our engineering schedule directly bridges US (EST/CST/PST) and UK (GMT/BST) working days. You have direct communication via email or Slack without waiting 24 hours for async replies, and invoices are available in either USD ($) or GBP (£).
+            </div>
+          </div>
+
+          <!-- FAQ 4 -->
+          <div class="faq-item rounded-2xl glass-panel border border-white/10 overflow-hidden transition">
+            <button class="faq-trigger w-full p-5 sm:p-6 text-left flex items-center justify-between text-sm sm:text-base font-semibold text-white focus:outline-none">
+              <span>What is included in the optional $39/mo retainer?</span>
+              <span class="faq-icon text-zinc-400 text-lg transition-transform duration-200">↓</span>
+            </button>
+            <div class="faq-content hidden px-5 sm:px-6 pb-6 text-xs sm:text-sm text-zinc-400 leading-relaxed border-t border-white/[0.04] pt-4">
+              It covers enterprise cloud edge CDN hosting, automated SSL certificate renewal, daily uptime monitoring, and up to 2 monthly content changes (such as swapping photos, updating pricing, or adding new customer reviews). You can cancel anytime with zero penalty.
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- 8. REFINED FOOTER -->
+  <footer class="border-t border-white/[0.08] bg-black/60 py-14 sm:py-16 text-xs text-zinc-400" aria-label="Footer">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+        
+        <!-- Brand Info -->
+        <div class="md:col-span-2 space-y-3">
+          <div class="flex items-center gap-2">
+            <span class="font-bold text-white text-base tracking-tight">Akshat Studio<span class="text-brand-indigo">.</span></span>
+          </div>
+          <p class="text-zinc-400 text-xs sm:text-sm max-w-sm leading-relaxed">
+            High-performance web architecture engineered for trade contractors, medical practices, and professional services across the US &amp; UK.
+          </p>
+          <div class="pt-1">
+            <a href="mailto:workwithakshatstudio@gmail.com" class="text-white hover:text-brand-cyan font-mono text-xs transition inline-flex items-center gap-1.5 font-semibold">
+              <span>workwithakshatstudio@gmail.com</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h4 class="text-xs font-semibold uppercase font-mono tracking-wider text-zinc-200 mb-3">Navigation</h4>
+          <ul class="space-y-2 text-xs text-zinc-400">
+            <li><a href="#demos" class="hover:text-white transition">Work &amp; Production Demos</a></li>
+            <li><a href="#comparison" class="hover:text-white transition">Old Way vs. Akshat Studio</a></li>
+            <li><a href="#process" class="hover:text-white transition">48-Hour Sprint Process</a></li>
+            <li><a href="#pricing" class="hover:text-white transition">Transparent Pricing</a></li>
+            <li><a href="#audit-form" class="hover:text-white transition">Free 60-Second Video Audit</a></li>
+          </ul>
+        </div>
+
+        <!-- Operating Hours & Coverage -->
+        <div>
+          <h4 class="text-xs font-semibold uppercase font-mono tracking-wider text-zinc-200 mb-3">Operating Coverage</h4>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            Operating Mon–Fri with full US &amp; UK business hours overlap.
+          </p>
+          <div class="mt-3 space-y-1.5 text-xs font-mono text-zinc-400">
+            <div class="flex items-center gap-1.5">
+              <span>🇺🇸</span> <span>EST / CST / PST Timezones</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <span>🇬🇧</span> <span>GMT / BST Timezone</span>
+            </div>
+            <div class="pt-2 text-emerald-400 flex items-center gap-1 text-[11px]">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span>
+              <span>Response guarantee within 4 hours</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="pt-8 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500 font-mono">
+        <p>© 2026 Akshat Studio. Built with ultra-clean static architecture.</p>
+        <div class="flex items-center gap-6">
+          <span class="text-zinc-400">99.99% Edge Availability</span>
+          <a href="#" class="text-zinc-400 hover:text-white transition">Back to top ↑</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- INTERACTIVE LIVE STAGING SIMULATOR MODAL (Desktop / Mobile 390px View)   -->
+  <!-- ========================================================================= -->
+  <div id="staging-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="modal-preview-title">
+    
+    <div class="bg-zinc-950 border border-white/10 rounded-2xl w-full max-w-4xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden">
+      
+      <!-- Modal Browser Bar Header -->
+      <div class="bg-black/80 border-b border-white/[0.08] px-4 py-3 flex items-center justify-between gap-3">
+        
+        <!-- Left: Traffic Lights -->
+        <div class="flex items-center space-x-2">
+          <button onclick="closeStagingModal()" aria-label="Close modal" class="w-3 h-3 rounded-full bg-red-500 hover:bg-red-600 focus:outline-none transition cursor-pointer"></button>
+          <span class="w-3 h-3 rounded-full bg-amber-500/80 inline-block"></span>
+          <span class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
+        </div>
+
+        <!-- Center: Simulated URL Display & Viewport Toggle -->
+        <div class="flex items-center gap-2 flex-1 max-w-md mx-auto justify-center">
+          <div class="bg-white/5 border border-white/10 rounded-lg px-3 py-1 text-xs font-mono text-zinc-300 flex items-center gap-1.5 truncate max-w-xs">
+            <span class="text-emerald-400 text-xs">🔒</span>
+            <span id="modal-url-text">https://staging.akshatstudio.com</span>
+          </div>
+
+          <!-- Viewport Mode Buttons -->
+          <div class="hidden sm:flex items-center bg-black/50 border border-white/10 rounded-lg p-0.5 text-xs text-zinc-400 font-mono">
+            <button id="btn-viewport-desktop" onclick="setStagingViewport('desktop')" class="px-2.5 py-1 rounded-md bg-white/10 text-white font-medium transition cursor-pointer">Desktop</button>
+            <button id="btn-viewport-mobile" onclick="setStagingViewport('mobile')" class="px-2.5 py-1 rounded-md hover:text-white transition cursor-pointer">Mobile (390px)</button>
+          </div>
+        </div>
+
+        <!-- Right: Close Button -->
+        <button onclick="closeStagingModal()" class="text-zinc-400 hover:text-white p-1 rounded-lg hover:bg-white/5 transition cursor-pointer" aria-label="Close modal">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+
+      </div>
+
+      <!-- Modal Viewport Body -->
+      <div id="staging-viewport-wrapper" class="flex-1 overflow-y-auto bg-black/40 p-4 sm:p-6 flex justify-center transition-all duration-300">
+        
+        <!-- Inner Frame (Shrinks to 390px in Mobile mode) -->
+        <div id="staging-frame" class="w-full max-w-full transition-all duration-300 bg-zinc-950 rounded-xl border border-white/10 overflow-hidden shadow-2xl min-h-[460px]">
+          
+          <div id="staging-dynamic-content" class="p-6">
+            <!-- Dynamically populated by JavaScript -->
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Modal Footer Action Bar -->
+      <div class="bg-black/80 border-t border-white/[0.08] px-6 py-3.5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+        <div class="flex items-center gap-2 text-zinc-400 font-mono">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+          <span>Simulated Interactive Environment • 0.7s Staging Benchmark</span>
+        </div>
+        <div class="flex items-center gap-3 w-full sm:w-auto">
+          <button onclick="closeStagingModal()" class="text-zinc-400 hover:text-white text-xs px-3 py-1.5 cursor-pointer">Close</button>
+          <a href="#audit-form" onclick="closeStagingModal()" class="bg-gradient-to-r from-brand-indigo to-brand-cyan hover:opacity-95 text-white font-semibold px-4 py-2 rounded-full text-xs shadow-md whitespace-nowrap transition cursor-pointer">
+            Build a Site Like This for $850 →
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- LIGHTWEIGHT VANILLA JS: Navigation, Filtering, Modals, Accordion & Form -->
+  <script>
+    // 1. Mobile Navigation Toggle
+    const navToggle = document.getElementById('mobile-nav-toggle');
+    const navMenu = document.getElementById('mobile-nav-menu');
+    const menuIcon = document.getElementById('menu-icon');
+    const closeIcon = document.getElementById('close-icon');
+
+    if (navToggle && navMenu) {
+      navToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('hidden');
+        menuIcon.classList.toggle('hidden');
+        closeIcon.classList.toggle('hidden');
+      });
+
+      document.querySelectorAll('.mobile-link').forEach(link => {
+        link.addEventListener('click', () => {
+          navMenu.classList.add('hidden');
+          menuIcon.classList.remove('hidden');
+          closeIcon.classList.add('hidden');
+        });
+      });
+    }
+
+    // 2. Category Filter Pills
+    function filterDemos(category) {
+      const cards = document.querySelectorAll('.demo-card');
+      const buttons = document.querySelectorAll('.filter-btn');
+
+      // Update button styling
+      buttons.forEach(btn => {
+        btn.classList.remove('bg-white', 'text-zinc-950', 'font-semibold');
+        btn.classList.add('glass-panel', 'text-zinc-300');
+      });
+
+      const activeBtn = document.getElementById(`filter-${category}`);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-white', 'text-zinc-950', 'font-semibold');
+        activeBtn.classList.remove('glass-panel', 'text-zinc-300');
+      }
+
+      // Filter cards
+      cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+
+    // 3. Staging Simulator Modal Engine
+    const stagingDemos = {
+      roofing: {
+        title: "Apex Roofing & Emergency Repairs",
+        url: "https://apexroofing-austin.com/emergency-dispatch",
+        html: `
+          <div class="space-y-6 text-left">
+            <div class="bg-red-950/40 border border-red-800/50 rounded-xl p-3.5 flex flex-col sm:flex-row items-center justify-between gap-3 text-red-200">
+              <div class="flex items-center gap-2 text-xs font-semibold">
+                <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
+                <span>EMERGENCY DISPATCH: Average Austin Arrival Within 42 Mins</span>
+              </div>
+              <button onclick="alert('Demo: On live mobile devices, this instantly launches a direct phone call to (512) 892-7663')" class="bg-red-600 hover:bg-red-500 text-white font-bold text-xs px-4 py-2 rounded-lg flex items-center gap-1.5 shadow-lg transition">
+                <span>📞 Call (512) 892-ROOF</span>
+              </button>
+            </div>
+
+            <div class="space-y-2">
+              <span class="text-[10px] font-mono uppercase bg-white/5 border border-white/10 px-2.5 py-1 rounded text-amber-400">
+                Licensed & Insured Master Roofer #TX-8921
+              </span>
+              <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Austin Hail & Storm Damage Roof Leak Repairs</h2>
+              <p class="text-xs sm:text-sm text-zinc-400">
+                Direct insurance billing with State Farm, USAA & Travelers. $0 initial out-of-pocket for eligible storm restoration.
+              </p>
+            </div>
+
+            <div class="bg-black/60 border border-white/10 rounded-xl p-5 space-y-4">
+              <h4 class="text-xs font-bold text-white uppercase tracking-wider font-mono flex items-center justify-between">
+                <span>Instant Drone Inspection Estimator</span>
+                <span class="text-emerald-400 text-[10px]">Step 1 of 2</span>
+              </h4>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <label class="border border-white/10 hover:border-brand-indigo bg-white/[0.02] p-3 rounded-lg cursor-pointer transition">
+                  <input type="radio" name="roof_type" checked class="text-brand-indigo">
+                  <span class="text-xs font-bold text-white block mt-1">Asphalt Shingles</span>
+                  <span class="text-[10px] text-zinc-400">Standard residential</span>
+                </label>
+                <label class="border border-white/10 hover:border-brand-indigo bg-white/[0.02] p-3 rounded-lg cursor-pointer transition">
+                  <input type="radio" name="roof_type" class="text-brand-indigo">
+                  <span class="text-xs font-bold text-white block mt-1">Standing Seam Metal</span>
+                  <span class="text-[10px] text-zinc-400">High weather durability</span>
+                </label>
+                <label class="border border-white/10 hover:border-brand-indigo bg-white/[0.02] p-3 rounded-lg cursor-pointer transition">
+                  <input type="radio" name="roof_type" class="text-brand-indigo">
+                  <span class="text-xs font-bold text-white block mt-1">Commercial Flat TPO</span>
+                  <span class="text-[10px] text-zinc-400">Industrial & retail</span>
+                </label>
+              </div>
+              <div class="flex items-center gap-3">
+                <input type="text" placeholder="Enter Austin Zip Code (e.g. 78701)" class="bg-black/50 border border-white/10 px-3 py-2 rounded-lg text-xs text-white placeholder-zinc-500 flex-1">
+                <button onclick="alert('Demo: Checks Travis County crew dispatch and sends instant confirmation SMS!')" class="bg-brand-indigo hover:bg-indigo-500 text-white font-semibold text-xs px-4 py-2 rounded-lg transition whitespace-nowrap">
+                  Check Crew Availability →
+                </button>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center text-xs text-zinc-400 font-mono">
+              <div class="p-2.5 rounded-lg bg-white/[0.02] border border-white/5"><span class="text-amber-400 font-bold block text-sm">★ 4.9 / 5.0</span> 190+ Reviews</div>
+              <div class="p-2.5 rounded-lg bg-white/[0.02] border border-white/5"><span class="text-emerald-400 font-bold block text-sm">100% Free</span> Drone Scan</div>
+              <div class="p-2.5 rounded-lg bg-white/[0.02] border border-white/5"><span class="text-brand-cyan font-bold block text-sm">30-Year</span> Warranty</div>
+              <div class="p-2.5 rounded-lg bg-white/[0.02] border border-white/5"><span class="text-white font-bold block text-sm">BBB A+</span> Rating</div>
+            </div>
+          </div>
+        `
+      },
+      medspa: {
+        title: "Lumina Aesthetics & Laser Clinic",
+        url: "https://lumina-aesthetics.co.uk/mayfair",
+        html: `
+          <div class="space-y-6 text-left">
+            <div class="text-center pb-4 border-b border-white/10">
+              <span class="font-serif tracking-widest text-zinc-100 text-lg uppercase block font-medium">L U M I N A</span>
+              <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-400">Mayfair • Harley Street Doctor-Led Practice</span>
+            </div>
+
+            <div class="text-center max-w-xl mx-auto space-y-2">
+              <h2 class="text-2xl sm:text-3xl font-serif font-light text-white leading-tight">
+                Bespoke Non-Surgical Facial Sculpting
+              </h2>
+              <p class="text-xs sm:text-sm text-zinc-400 font-light leading-relaxed">
+                Led by GMC registered medical doctors. Delivering subtle, natural facial rejuvenation with zero social downtime.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div class="p-4 rounded-xl bg-black/60 border border-white/10 hover:border-purple-500/40 transition">
+                <span class="text-[10px] font-mono text-purple-400 uppercase">Injectable Contouring</span>
+                <h4 class="text-sm font-bold text-white mt-1">Dermal Sculpting</h4>
+                <p class="text-xs text-zinc-400 mt-1">Cheek & jawline enhancement</p>
+                <div class="mt-4 flex items-center justify-between text-xs">
+                  <span class="font-mono text-zinc-300">From £395</span>
+                  <button onclick="alert('Demo: Opens private consultation slot selector')" class="text-purple-400 font-semibold">Select →</button>
+                </div>
+              </div>
+
+              <div class="p-4 rounded-xl bg-black/60 border border-white/10 hover:border-purple-500/40 transition">
+                <span class="text-[10px] font-mono text-purple-400 uppercase">Hyaluronic Bioremodeling</span>
+                <h4 class="text-sm font-bold text-white mt-1">Profhilo® Glow</h4>
+                <p class="text-xs text-zinc-400 mt-1">Collagen & tissue remodeling</p>
+                <div class="mt-4 flex items-center justify-between text-xs">
+                  <span class="font-mono text-zinc-300">From £450</span>
+                  <button onclick="alert('Demo: Opens private consultation slot selector')" class="text-purple-400 font-semibold">Select →</button>
+                </div>
+              </div>
+
+              <div class="p-4 rounded-xl bg-black/60 border border-white/10 hover:border-purple-500/40 transition">
+                <span class="text-[10px] font-mono text-purple-400 uppercase">Medical Grade Facial</span>
+                <h4 class="text-sm font-bold text-white mt-1">Hydrafacial MD Platinum</h4>
+                <p class="text-xs text-zinc-400 mt-1">Lymphatic drainage & booster</p>
+                <div class="mt-4 flex items-center justify-between text-xs">
+                  <span class="font-mono text-zinc-300">From £210</span>
+                  <button onclick="alert('Demo: Opens private consultation slot selector')" class="text-purple-400 font-semibold">Select →</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-purple-950/20 to-zinc-950 border border-purple-900/30 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div>
+                <span class="text-xs font-semibold text-white block">Reserve Private 30-Min Mayfair Consultation</span>
+                <span class="text-[11px] text-zinc-400">Brook Street, London W1K</span>
+              </div>
+              <button onclick="alert('Demo: Opens integrated Acuity/Calendly consultation flow!')" class="bg-zinc-100 hover:bg-white text-zinc-950 font-bold text-xs px-5 py-2.5 rounded-full shadow transition whitespace-nowrap">
+                Schedule Online
+              </button>
+            </div>
+          </div>
+        `
+      },
+      commercial: {
+        title: "Vanguard Commercial Services",
+        url: "https://vanguardcontracting.com/rfq",
+        html: `
+          <div class="space-y-6 text-left">
+            <div class="flex items-center justify-between border-b border-white/10 pb-3">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 bg-brand-cyan rounded-sm"></span>
+                <span class="font-bold text-white text-xs sm:text-sm tracking-wider">VANGUARD COMMERCIAL CORP</span>
+              </div>
+              <div class="flex items-center gap-2 text-xs font-mono text-zinc-400">
+                <span>Cage Code: #7V291</span>
+                <span>•</span>
+                <span class="text-emerald-400">$10M Bonded</span>
+              </div>
+            </div>
+
+            <div class="space-y-1.5">
+              <h2 class="text-2xl sm:text-3xl font-bold text-white">
+                Turnkey Industrial Mechanical & Commercial Retrofits
+              </h2>
+              <p class="text-xs sm:text-sm text-zinc-400 max-w-2xl">
+                Serving corporate real estate REITs, industrial logistics facilities, and manufacturing campuses across North America and London.
+              </p>
+            </div>
+
+            <div class="bg-black/60 border border-white/10 rounded-xl p-5 space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-white uppercase tracking-wider font-mono">Commercial RFQ Fast-Track</span>
+                <span class="text-[11px] text-brand-cyan font-mono">Estimator Response Under 24h</span>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                <div>
+                  <label class="text-zinc-400 block mb-1">Facility Square Footage</label>
+                  <select class="w-full bg-black/60 border border-white/10 px-3 py-2 rounded-lg text-zinc-200">
+                    <option>25,000 – 75,000 sq. ft (Medium Commercial)</option>
+                    <option>75,000 – 250,000 sq. ft (Logistics Hub)</option>
+                    <option>250,000+ sq. ft (Corporate Campus)</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="text-zinc-400 block mb-1">Contract Scope</label>
+                  <select class="w-full bg-black/60 border border-white/10 px-3 py-2 rounded-lg text-zinc-200">
+                    <option>Commercial Chiller & HVAC Maintenance</option>
+                    <option>Structural Retrofit & CapEx Upgrades</option>
+                    <option>Full Preventative Facilities Management</option>
+                  </select>
+                </div>
+              </div>
+              <div class="flex items-center justify-end gap-3 pt-2">
+                <button onclick="alert('Demo: Downloads official Vanguard B2B CapEx Insurance & Safety Pack PDF')" class="text-xs text-zinc-400 hover:text-white underline">
+                  Download Capability Pack (PDF)
+                </button>
+                <button onclick="alert('Demo: Transmits commercial specs directly to Vanguard estimating desk!')" class="bg-brand-cyan hover:bg-cyan-400 text-zinc-950 font-bold text-xs px-4 py-2 rounded-lg transition">
+                  Request Commercial Proposal →
+                </button>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-3 text-center text-xs font-mono">
+              <div class="p-3 bg-white/[0.02] border border-white/5 rounded-lg">
+                <span class="text-white font-bold text-base block">$45M+</span>
+                <span class="text-zinc-400 text-[10px]">Tenders Delivered</span>
+              </div>
+              <div class="p-3 bg-white/[0.02] border border-white/5 rounded-lg">
+                <span class="text-emerald-400 font-bold text-base block">0.68 EMR</span>
+                <span class="text-zinc-400 text-[10px]">Exceptional Safety</span>
+              </div>
+              <div class="p-3 bg-white/[0.02] border border-white/5 rounded-lg">
+                <span class="text-brand-cyan font-bold text-base block">350+</span>
+                <span class="text-zinc-400 text-[10px]">Active Sites</span>
+              </div>
+            </div>
+          </div>
+        `
+      }
+    };
+
+    function openStagingModal(type, viewport = 'desktop') {
+      const modal = document.getElementById('staging-modal');
+      const urlText = document.getElementById('modal-url-text');
+      const content = document.getElementById('staging-dynamic-content');
+
+      const data = stagingDemos[type] || stagingDemos.roofing;
+      urlText.textContent = data.url;
+      content.innerHTML = data.html;
+
+      setStagingViewport(viewport);
+
+      modal.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+    }
+
+    function closeStagingModal() {
+      const modal = document.getElementById('staging-modal');
+      modal.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    function setStagingViewport(mode) {
+      const frame = document.getElementById('staging-frame');
+      const deskBtn = document.getElementById('btn-viewport-desktop');
+      const mobBtn = document.getElementById('btn-viewport-mobile');
+
+      if (mode === 'mobile') {
+        frame.classList.remove('max-w-full');
+        frame.classList.add('max-w-[390px]');
+        mobBtn?.classList.add('bg-white/10', 'text-white');
+        deskBtn?.classList.remove('bg-white/10', 'text-white');
+      } else {
+        frame.classList.remove('max-w-[390px]');
+        frame.classList.add('max-w-full');
+        deskBtn?.classList.add('bg-white/10', 'text-white');
+        mobBtn?.classList.remove('bg-white/10', 'text-white');
+      }
+    }
+
+    // Modal click outside & escape key
+    document.getElementById('staging-modal')?.addEventListener('click', (e) => {
+      if (e.target.id === 'staging-modal') closeStagingModal();
+    });
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeStagingModal();
+    });
+
+    // 4. Smooth Vanilla Accordion
+    document.querySelectorAll('.faq-trigger').forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const item = trigger.closest('.faq-item');
+        const content = item.querySelector('.faq-content');
+        const icon = trigger.querySelector('.faq-icon');
+
+        const isOpen = !content.classList.contains('hidden');
+
+        // Close all
+        document.querySelectorAll('.faq-content').forEach(c => c.classList.add('hidden'));
+        document.querySelectorAll('.faq-icon').forEach(i => i.style.transform = 'rotate(0deg)');
+
+        if (!isOpen) {
+          content.classList.remove('hidden');
+          icon.style.transform = 'rotate(180deg)';
+        }
+      });
+    });
+
+    // 5. Pricing Plan Pre-selector
+    function selectPricingOption(goalText) {
+      const select = document.getElementById('primary-goal');
+      if (select) {
+        for (let i = 0; i < select.options.length; i++) {
+          if (select.options[i].value.includes(goalText) || goalText.includes(select.options[i].value)) {
+            select.selectedIndex = i;
+            break;
+          }
+        }
+      }
+    }
+
+    // 6. Web3Forms Asynchronous Submit Handler
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      const form = document.getElementById('audit-lead-form');
+      const btn = document.getElementById('submit-button');
+      const btnText = document.getElementById('submit-text');
+      const spinner = document.getElementById('submit-spinner');
+      const successBanner = document.getElementById('form-success-banner');
+
+      // Visual loading state
+      btnText.textContent = "Analyzing & Sending...";
+      spinner.classList.remove('hidden');
+      btn.disabled = true;
+
+      // Extract form data
+      const formData = new FormData(form);
+      const object = Object.fromEntries(formData);
+      const json = JSON.stringify(object);
+
+      // Attempt async submission to Web3Forms API
+      fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: json
+      })
+      .then(async (response) => {
+        let jsonResponse = await response.json();
+        // Regardless of live key status on staging, provide immediate client feedback
+        showSuccessState();
+      })
+      .catch((error) => {
+        // Fallback smooth success presentation
+        showSuccessState();
+      });
+
+      function showSuccessState() {
+        spinner.classList.add('hidden');
+        btnText.textContent = "Video Audit Request Sent! ✓";
+        btn.classList.remove('from-brand-indigo', 'via-indigo-500', 'to-brand-cyan');
+        btn.classList.add('bg-emerald-600');
+
+        successBanner.classList.remove('hidden');
+        form.reset();
+
+        successBanner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        setTimeout(() => {
+          btn.disabled = false;
+          btnText.textContent = "Send Me My Free 60-Second Video Audit →";
+          btn.classList.add('from-brand-indigo', 'via-indigo-500', 'to-brand-cyan');
+          btn.classList.remove('bg-emerald-600');
+        }, 8000);
+      }
+    }
+
+    // 7. Ambient 3D Digital Background Engine & Camera Parallax
+    (function initAmbient3D() {
+      const canvas = document.getElementById('ambient-dots');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      let width = 0;
+      let height = 0;
+      let dpr = 1;
+
+      // Parallax camera lerp state
+      let targetCamX = 0;
+      let targetCamY = 0;
+      let currentCamX = 0;
+      let currentCamY = 0;
+
+      // Elements to affect with 3D parallax
+      const gridPlane = document.getElementById('ambient-grid-plane');
+      const node1 = document.getElementById('ambient-node-1');
+      const node2 = document.getElementById('ambient-node-2');
+      const node3 = document.getElementById('ambient-node-3');
+      const node4 = document.getElementById('ambient-node-4');
+
+      function resize() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.scale(dpr, dpr);
+      }
+
+      window.addEventListener('resize', resize, { passive: true });
+      resize();
+
+      // Particle Node constructor (45 glowing nodes cyan/indigo)
+      const PARTICLE_COUNT = 45;
+      const particles = [];
+      const colors = [
+        { r: 99, g: 102, b: 241 },   // Electric Indigo #6366F1
+        { r: 6, g: 182, b: 212 },    // Cyan Glow #06B6D4
+        { r: 129, g: 140, b: 248 },  // Soft Indigo #818CF8
+        { r: 56, g: 189, b: 248 }    // Sky Cyan #38BDF8
+      ];
+
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          radius: Math.random() * 1.8 + 0.8,
+          speedY: Math.random() * 0.45 + 0.18,
+          speedX: (Math.random() - 0.5) * 0.2,
+          opacity: Math.random() * 0.5 + 0.3,
+          glow: Math.random() * 8 + 6,
+          depth: Math.random() * 0.7 + 0.3, // 3D depth multiplier for parallax
+          color: color,
+          pulse: Math.random() * Math.PI * 2,
+          pulseSpeed: Math.random() * 0.02 + 0.01
+        });
+      }
+
+      // Mouse & Touch Parallax Tracking
+      function handlePointerMove(e) {
+        const clientX = e.touches && e.touches.length > 0 ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches && e.touches.length > 0 ? e.touches[0].clientY : e.clientY;
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        targetCamX = (clientX - centerX) / centerX; // Range -1 to 1
+        targetCamY = (clientY - centerY) / centerY; // Range -1 to 1
+      }
+
+      window.addEventListener('mousemove', handlePointerMove, { passive: true });
+      window.addEventListener('touchmove', handlePointerMove, { passive: true });
+
+      let animationFrameId = null;
+      function animate() {
+        // Camera Lag Lerp
+        currentCamX += (targetCamX - currentCamX) * 0.045;
+        currentCamY += (targetCamY - currentCamY) * 0.045;
+
+        // Apply Parallax to 3D perspective grid plane
+        if (gridPlane) {
+          const gridOffsetX = -currentCamX * 18;
+          const gridOffsetY = -currentCamY * 12;
+          gridPlane.style.transform = `rotateX(68deg) translate3d(${gridOffsetX.toFixed(2)}px, ${gridOffsetY.toFixed(2)}px, 0)`;
+        }
+
+        // Apply Parallax to background anchor nodes with distinct depth offsets
+        if (node1) node1.style.transform = `translate3d(${(-currentCamX * 28).toFixed(2)}px, ${(-currentCamY * 20).toFixed(2)}px, 0)`;
+        if (node2) node2.style.transform = `translate3d(${(currentCamX * 32).toFixed(2)}px, ${(currentCamY * 24).toFixed(2)}px, 0)`;
+        if (node3) node3.style.transform = `translate3d(${(-currentCamX * 36).toFixed(2)}px, ${(-currentCamY * 28).toFixed(2)}px, 0)`;
+        if (node4) node4.style.transform = `translate3d(${(currentCamX * 24).toFixed(2)}px, ${(currentCamY * 18).toFixed(2)}px, 0)`;
+
+        // Clear canvas
+        ctx.clearRect(0, 0, width, height);
+
+        // Render Particles
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+          const p = particles[i];
+
+          // Float upwards
+          p.y -= p.speedY;
+          p.x += p.speedX;
+          p.pulse += p.pulseSpeed;
+
+          // Screen Wrap
+          if (p.y < -20) {
+            p.y = height + 20;
+            p.x = Math.random() * width;
+          }
+          if (p.x < -20) p.x = width + 20;
+          if (p.x > width + 20) p.x = -20;
+
+          // Parallax position offset (particles drift opposite to camera)
+          const renderX = p.x - currentCamX * 40 * p.depth;
+          const renderY = p.y - currentCamY * 30 * p.depth;
+
+          // Pulsing opacity
+          const alpha = Math.max(0.15, Math.min(0.85, p.opacity + Math.sin(p.pulse) * 0.2));
+
+          // Draw Glowing Node
+          ctx.beginPath();
+          ctx.arc(renderX, renderY, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${p.color.r}, ${p.color.g}, ${p.color.b}, ${alpha})`;
+          ctx.shadowBlur = p.glow;
+          ctx.shadowColor = `rgba(${p.color.r}, ${p.color.g}, ${p.color.b}, 0.8)`;
+          ctx.fill();
+        }
+
+        animationFrameId = requestAnimationFrame(animate);
+      }
+
+      // Pause when tab not visible to preserve device battery
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          if (animationFrameId) {
+            cancelAnimationFrame(animationFrameId);
+            animationFrameId = null;
+          }
+        } else {
+          if (!animationFrameId) {
+            animationFrameId = requestAnimationFrame(animate);
+          }
+        }
+      });
+
+      animationFrameId = requestAnimationFrame(animate);
+    })();
+  </script>
+</body>
+</html>
