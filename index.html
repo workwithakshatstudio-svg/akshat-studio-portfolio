@@ -249,9 +249,9 @@
     <div id="ambient-node-4" class="ambient-accent-node absolute bottom-[5%] left-[15%] w-72 h-72 rounded-full bg-blue-600/10 filter blur-[85px] pointer-events-none animate-float-reverse"></div>
   </div>
 
-  <!-- 1. FLOATING NAVIGATION BAR (Centered Pill / Capsule) -->
-  <div class="sticky top-2 sm:top-4 z-50 px-0 sm:px-6">
-    <nav class="w-[94%] max-w-sm md:w-full md:max-w-6xl xl:max-w-7xl mx-auto mt-2 md:mt-0 px-3 py-2 sm:px-4 md:px-8 md:py-4 rounded-full bg-zinc-950/90 md:bg-[#0c0d14]/60 md:backdrop-blur-xl border border-white/10 shadow-[0_16px_45px_rgba(0,0,0,0.65)] flex items-center justify-between transition-all" aria-label="Main Navigation">
+  <!-- 1. FLOATING NAVIGATION BAR (Centered Pill / Capsule - Exact Same on Mobile & Desktop) -->
+  <div class="sticky top-2 sm:top-4 z-50 px-2 sm:px-6">
+    <nav class="w-[96%] sm:w-[94%] md:w-full md:max-w-6xl xl:max-w-7xl mx-auto rounded-full bg-[#0c0d14]/95 sm:bg-[#0c0d14]/60 sm:backdrop-blur-xl border border-white/10 shadow-[0_16px_45px_rgba(0,0,0,0.65)] flex items-center justify-between overflow-x-auto no-scrollbar scroll-smooth py-2.5 px-3.5 sm:px-5 md:px-8 md:py-4 gap-3.5 sm:gap-6 md:gap-8 transition-all" aria-label="Main Navigation">
       
       <!-- Left: Studio Logo with Animated Glowing Dot -->
       <a href="#" class="flex items-center gap-2 md:gap-3.5 group focus:outline-none shrink-0">
@@ -264,22 +264,22 @@
           </div>
         </div>
         <div class="flex items-center">
-          <span class="font-bold text-base md:text-xl xl:text-2xl tracking-tight text-white group-hover:text-zinc-100 transition whitespace-nowrap">
+          <span class="font-bold text-sm sm:text-base md:text-xl xl:text-2xl tracking-tight text-white group-hover:text-zinc-100 transition whitespace-nowrap">
             Akshat Studio<span class="text-brand-indigo">.</span>
           </span>
         </div>
       </a>
 
-      <!-- Center Links (Desktop) -->
-      <div class="hidden md:flex items-center gap-8 lg:gap-10">
-        <a href="#demos" class="text-base font-semibold text-zinc-300 hover:text-white transition-colors">Work & Demos</a>
-        <a href="#comparison" class="text-base font-semibold text-zinc-300 hover:text-white transition-colors">Comparison</a>
-        <a href="#pricing" class="text-base font-semibold text-zinc-300 hover:text-white transition-colors">Pricing</a>
-        <a href="#process" class="text-base font-semibold text-zinc-300 hover:text-white transition-colors">Process</a>
+      <!-- Center Links (Visible on Mobile & Desktop, 1:1 Match) -->
+      <div class="flex items-center gap-3.5 sm:gap-6 md:gap-8 lg:gap-10 shrink-0">
+        <a href="#demos" class="text-xs sm:text-sm md:text-base font-semibold text-zinc-300 hover:text-white transition-colors whitespace-nowrap">Work &amp; Demos</a>
+        <a href="#comparison" class="text-xs sm:text-sm md:text-base font-semibold text-zinc-300 hover:text-white transition-colors whitespace-nowrap">Comparison</a>
+        <a href="#pricing" class="text-xs sm:text-sm md:text-base font-semibold text-zinc-300 hover:text-white transition-colors whitespace-nowrap">Pricing</a>
+        <a href="#process" class="text-xs sm:text-sm md:text-base font-semibold text-zinc-300 hover:text-white transition-colors whitespace-nowrap">Process</a>
       </div>
 
-      <!-- Right: Live Status Badge & Action CTA -->
-      <div class="flex items-center gap-1.5 md:gap-4 shrink-0">
+      <!-- Right: Live Status Badge & Action CTA (Visible on Mobile & Desktop, 1:1 Match) -->
+      <div class="flex items-center gap-2 sm:gap-3 md:gap-4 shrink-0">
         <!-- Available Badge: 24/7 on both mobile and laptop -->
         <div class="inline-flex items-center gap-1.5 md:gap-2 px-2.5 py-1 md:px-4 md:py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs md:text-sm font-semibold text-emerald-400 whitespace-nowrap shrink-0">
           <span class="relative flex h-2 w-2 md:h-2.5 md:w-2.5">
@@ -289,30 +289,14 @@
           <span>Available 24/7</span>
         </div>
 
-        <!-- Action Button -->
-        <a href="#audit-form" class="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 md:px-6 md:py-3 text-xs md:text-base font-bold rounded-full bg-white text-zinc-950 hover:bg-zinc-200 transition-all duration-200 shadow-md shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_28px_rgba(255,255,255,0.35)] active:scale-95 whitespace-nowrap shrink-0">
-          <span class="hidden md:inline">Get Free 60s Audit</span>
-          <span class="inline md:hidden">Audit →</span>
-          <svg class="w-4 h-4 ml-0.5 hidden md:inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+        <!-- Action Button: Get Free 60s Audit → (Full text on mobile & laptop) -->
+        <a href="#audit-form" class="inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 md:px-6 md:py-3 text-xs sm:text-sm md:text-base font-bold rounded-full bg-white text-zinc-950 hover:bg-zinc-200 transition-all duration-200 shadow-md shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_28px_rgba(255,255,255,0.35)] active:scale-95 whitespace-nowrap shrink-0">
+          <span>Get Free 60s Audit</span>
+          <svg class="w-3.5 h-3.5 md:w-4 md:h-4 ml-0.5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
         </a>
-
-        <!-- Mobile Menu Toggle Button (Kept hidden for clean single-line bar) -->
-        <button id="mobile-nav-toggle" type="button" aria-label="Toggle Navigation Menu" class="hidden p-2.5 rounded-full text-zinc-400 hover:text-white hover:bg-white/5 md:hidden focus:outline-none">
-          <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-          <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-        </button>
       </div>
 
     </nav>
-
-    <!-- Mobile Dropdown Panel -->
-    <div id="mobile-nav-menu" class="hidden md:hidden mx-auto max-w-md mt-2 p-4 rounded-2xl glass-panel space-y-2 text-sm text-center">
-      <a href="#demos" class="mobile-link block py-2 px-3 rounded-lg text-zinc-300 hover:text-white hover:bg-white/5">Work & Demos</a>
-      <a href="#comparison" class="mobile-link block py-2 px-3 rounded-lg text-zinc-300 hover:text-white hover:bg-white/5">Comparison</a>
-      <a href="#pricing" class="mobile-link block py-2 px-3 rounded-lg text-zinc-300 hover:text-white hover:bg-white/5">Pricing</a>
-      <a href="#process" class="mobile-link block py-2 px-3 rounded-lg text-zinc-300 hover:text-white hover:bg-white/5">Process</a>
-      <a href="#audit-form" class="mobile-link block py-2.5 px-4 rounded-full bg-brand-indigo text-white font-semibold text-xs mt-2">Get Free 60-Second Video Audit →</a>
-    </div>
   </div>
 
   <main>
