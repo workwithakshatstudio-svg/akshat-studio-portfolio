@@ -61,10 +61,27 @@
       color-scheme: dark;
     }
 
+    html {
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+      scroll-behavior: smooth;
+    }
+
     body {
-      background-color: #07080c;
+      background-color: #07080d;
       color: #a1a1aa;
       font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+    }
+
+    /* Hardware Accelerated Ambient Canvas */
+    #ambient-3d-bg {
+      will-change: transform;
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
     }
 
     /* 3D Receding Perspective Grid with Scanline and Glow Animation */
@@ -130,11 +147,9 @@
       animation: float-reverse 18s ease-in-out infinite;
     }
 
-    /* UI Panels & Cards (Translucent frosted glass with hairline border) */
+    /* UI Panels & Cards (Mobile-first: solid background on mobile to eliminate GPU blur thrashing; frosted glass on desktop) */
     .glass-panel {
-      background: rgba(9, 10, 15, 0.45);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
+      background: rgba(12, 13, 20, 0.95);
       border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 1rem;
       box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
@@ -142,13 +157,24 @@
     }
 
     .glass-card-interactive {
-      background: rgba(9, 10, 15, 0.45);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
+      background: rgba(12, 13, 20, 0.95);
       border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 1rem;
       box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
       transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @media (min-width: 640px) {
+      .glass-panel {
+        background: rgba(12, 13, 20, 0.6);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+      }
+      .glass-card-interactive {
+        background: rgba(12, 13, 20, 0.6);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+      }
     }
 
     .glass-card-interactive:hover {
@@ -189,21 +215,21 @@
 <body class="bg-[#07080d] text-zinc-400 font-sans antialiased min-h-screen relative overflow-x-hidden selection:bg-indigo-500/30 selection:text-white">
 
   <!-- 3D Digital Ambient Background Stack (Fixed Viewport, High-End Tech Depth) -->
-  <div id="ambient-3d-bg" class="fixed inset-0 z-[-1] bg-[#07080d] overflow-hidden pointer-events-none">
+  <div id="ambient-3d-bg" class="fixed inset-0 z-[-1] bg-[#07080d] overflow-hidden pointer-events-none" style="will-change: transform; transform: translateZ(0); -webkit-transform: translateZ(0);">
     <!-- Sub-layer A: Deep Cinematic Spotlight -->
     <div id="ambient-spotlight" class="absolute inset-0 pointer-events-none" style="background: radial-gradient(circle at 50% 0%, rgba(99,102,241,0.18) 0%, rgba(6,182,212,0.06) 40%, rgba(7,8,13,1) 100%);"></div>
 
-    <!-- Sub-layer B: 3D Receding Perspective Ground Grid -->
-    <div class="absolute inset-x-0 bottom-0 h-[65vh] overflow-hidden pointer-events-none" style="perspective: 500px; transform-style: preserve-3d;">
+    <!-- Sub-layer B: 3D Receding Perspective Ground Grid (Hidden on mobile for 60fps performance) -->
+    <div class="hidden md:block absolute inset-x-0 bottom-0 h-[65vh] overflow-hidden pointer-events-none" style="perspective: 500px; transform-style: preserve-3d;">
       <div id="ambient-grid-plane" class="ambient-perspective-grid absolute -inset-x-1/2 bottom-0 h-[1000px] origin-bottom" style="transform: rotateX(68deg);"></div>
     </div>
 
     <!-- Sub-layer C: Lightweight Canvas Particle Field -->
     <canvas id="ambient-dots" class="absolute inset-0 opacity-40 pointer-events-none"></canvas>
 
-    <!-- Sub-layer D: Slight Cinematic Blur & Visual Edge Dampening Overlay -->
-    <div class="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#07080d] to-transparent pointer-events-none backdrop-blur-[20px] opacity-75"></div>
-    <div class="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#07080d] to-transparent pointer-events-none backdrop-blur-[20px] opacity-75"></div>
+    <!-- Sub-layer D: Slight Cinematic Blur & Visual Edge Dampening Overlay (Hidden on mobile to save GPU cycles) -->
+    <div class="hidden sm:block absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#07080d] to-transparent pointer-events-none backdrop-blur-[20px] opacity-75"></div>
+    <div class="hidden sm:block absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#07080d] to-transparent pointer-events-none backdrop-blur-[20px] opacity-75"></div>
     <div class="absolute top-0 inset-x-0 h-28 bg-gradient-to-b from-[#07080d] to-transparent pointer-events-none opacity-60"></div>
     <div class="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-[#07080d] to-transparent pointer-events-none opacity-80"></div>
 
@@ -216,7 +242,7 @@
 
   <!-- 1. FLOATING NAVIGATION BAR (Centered Pill / Capsule) -->
   <div class="sticky top-4 z-50 px-4 sm:px-6">
-    <nav class="mx-auto max-w-6xl xl:max-w-7xl bg-zinc-950/40 backdrop-blur-md border border-white/10 rounded-full px-6 sm:px-8 py-3.5 sm:py-4 shadow-[0_16px_45px_rgba(0,0,0,0.65)] flex items-center justify-between transition-all" aria-label="Main Navigation">
+    <nav class="mx-auto max-w-6xl xl:max-w-7xl bg-[#0c0d14]/95 sm:bg-[#0c0d14]/60 sm:backdrop-blur-xl border border-white/10 rounded-full px-6 sm:px-8 py-3.5 sm:py-4 shadow-[0_16px_45px_rgba(0,0,0,0.65)] flex items-center justify-between transition-all" aria-label="Main Navigation">
       
       <!-- Left: Studio Logo with Animated Glowing Dot -->
       <a href="#" class="flex items-center gap-3 sm:gap-3.5 group focus:outline-none">
@@ -845,7 +871,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch">
           
           <!-- CARD 1 (LEFT — STANDARD STYLE): Fast-Track Landing Page ($450) -->
-          <div class="rounded-2xl p-7 sm:p-8 flex flex-col justify-between bg-[#090a0f]/45 backdrop-blur-xl border border-white/[0.06] shadow-2xl shadow-indigo-950/10 hover:border-indigo-500/30 hover:shadow-[0_0_30px_-5px_rgba(99,102,241,0.15)] transition-all duration-500 hover:-translate-y-1">
+          <div class="rounded-2xl p-7 sm:p-8 flex flex-col justify-between bg-[#0c0d14]/95 sm:bg-[#0c0d14]/60 sm:backdrop-blur-xl border border-white/[0.06] shadow-2xl shadow-indigo-950/10 hover:border-indigo-500/30 hover:shadow-[0_0_30px_-5px_rgba(99,102,241,0.15)] transition-all duration-500 hover:-translate-y-1">
             <div>
               <div class="flex items-center justify-between">
                 <span class="text-xs font-mono uppercase tracking-wider text-zinc-400 font-semibold">Tier 01</span>
@@ -904,7 +930,7 @@
           </div>
 
           <!-- CARD 2 (MIDDLE — THE ONLY HIGHLIGHTED CARD): The Authority Website ($850) -->
-          <div class="rounded-2xl p-7 sm:p-8 flex flex-col justify-between relative border-2 border-indigo-500/70 shadow-[0_0_35px_-5px_rgba(99,102,241,0.35)] bg-gradient-to-b from-indigo-950/40 via-[#090a0f]/60 to-[#090a0f]/80 backdrop-blur-xl lg:-translate-y-2 lg:hover:-translate-y-3 transition-all duration-500 z-10">
+          <div class="rounded-2xl p-7 sm:p-8 flex flex-col justify-between relative border-2 border-indigo-500/70 shadow-[0_0_35px_-5px_rgba(99,102,241,0.35)] bg-gradient-to-b from-indigo-950/40 via-[#0c0d14]/95 to-[#0c0d14]/95 sm:via-[#0c0d14]/60 sm:to-[#0c0d14]/80 sm:backdrop-blur-xl lg:-translate-y-2 lg:hover:-translate-y-3 transition-all duration-500 z-10">
             
             <!-- Floating Badge at Top -->
             <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-indigo-500 via-brand-indigo to-brand-cyan text-white text-[10px] font-bold uppercase tracking-wider py-1 px-4 rounded-full shadow-lg border border-white/20 whitespace-nowrap">
@@ -977,7 +1003,7 @@
           </div>
 
           <!-- CARD 3 (RIGHT — STANDARD STYLE): Multi-Page Premium Hub ($1,500) -->
-          <div class="rounded-2xl p-7 sm:p-8 flex flex-col justify-between bg-[#090a0f]/45 backdrop-blur-xl border border-white/[0.06] shadow-2xl shadow-indigo-950/10 hover:border-indigo-500/30 hover:shadow-[0_0_30px_-5px_rgba(99,102,241,0.15)] transition-all duration-500 hover:-translate-y-1">
+          <div class="rounded-2xl p-7 sm:p-8 flex flex-col justify-between bg-[#0c0d14]/95 sm:bg-[#0c0d14]/60 sm:backdrop-blur-xl border border-white/[0.06] shadow-2xl shadow-indigo-950/10 hover:border-indigo-500/30 hover:shadow-[0_0_30px_-5px_rgba(99,102,241,0.15)] transition-all duration-500 hover:-translate-y-1">
             <div>
               <div class="flex items-center justify-between">
                 <span class="text-xs font-mono uppercase tracking-wider text-zinc-400 font-semibold">Tier 03</span>
@@ -1042,7 +1068,7 @@
         </div>
 
         <!-- BOTTOM CALLOUT BANNER -->
-        <div class="mt-12 max-w-3xl mx-auto p-4 sm:p-5 rounded-2xl bg-[#090a0f]/45 backdrop-blur-xl border border-white/[0.06] text-center text-xs text-zinc-400 leading-relaxed shadow-2xl shadow-indigo-950/10">
+        <div class="mt-12 max-w-3xl mx-auto p-4 sm:p-5 rounded-2xl bg-[#0c0d14]/95 sm:bg-[#0c0d14]/60 sm:backdrop-blur-xl border border-white/[0.06] text-center text-xs text-zinc-400 leading-relaxed shadow-2xl shadow-indigo-950/10">
           <p>
             💡 All builds include 14 days of free post-launch support. Looking for completely hands-off hosting? We offer an optional $39/month Care &amp; Hosting Retainer covering enterprise cloud hosting, automatic SSL renewal, and monthly text/photo updates.
           </p>
@@ -1113,29 +1139,16 @@
 
           </div>
 
-          <!-- Right Column: Web3Forms Integrated Form Container -->
+          <!-- Right Column: Netlify Forms Integrated Lead Container -->
           <div class="lg:col-span-7">
             <div class="glass-panel rounded-3xl p-6 sm:p-9 border border-white/[0.06] relative shadow-[0_0_50px_rgba(0,0,0,0.8)] shadow-indigo-950/10">
               
-              <!-- Success Alert Banner (Shown via JavaScript) -->
-              <div id="form-success-banner" class="hidden mb-6 p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-sm">
-                <div class="flex items-center gap-2 font-bold text-emerald-200">
-                  <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
-                  <span>Video Audit Request Received!</span>
-                </div>
-                <p class="mt-1.5 text-xs text-emerald-300/90 leading-relaxed">
-                  Thank you! Akshat will review your business website and send your custom 60-second video breakdown directly to your email within 24 hours.
-                </p>
-              </div>
-
-              <!-- Web3Forms Form -->
-              <form id="audit-lead-form" action="https://api.web3forms.com/submit" method="POST" onsubmit="handleFormSubmit(event)" class="space-y-4">
+              <!-- Native Netlify Forms -->
+              <form name="audit-requests" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" id="audit-lead-form" class="space-y-4">
                 
-                <!-- Web3Forms Configuration Hidden Fields -->
-                <input type="hidden" name="access_key" value="workwithakshatstudio-audit-key">
-                <input type="hidden" name="subject" value="New 60s Video Audit Request — Akshat Studio">
-                <input type="hidden" name="from_name" value="Akshat Studio Lead Intake">
-                <input type="hidden" name="recipient_email" value="workwithakshatstudio@gmail.com">
+                <!-- Netlify Bot Protection & Form Identifier -->
+                <input type="hidden" name="form-name" value="audit-requests" />
+                <p class="hidden"><label>Don't fill this out if you're human: <input name="bot-field" /></label></p>
 
                 <!-- Row 1: Business Name & Owner Name -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1228,11 +1241,7 @@
                     id="submit-button" 
                     class="w-full py-4 px-6 rounded-full bg-gradient-to-r from-brand-indigo via-indigo-500 to-brand-cyan hover:opacity-95 text-white font-bold text-xs sm:text-sm tracking-wide shadow-[0_0_30px_rgba(99,102,241,0.4)] transition-all duration-200 active:scale-98 flex items-center justify-center gap-2 cursor-pointer"
                   >
-                    <span id="submit-text">Send Me My Free 60-Second Video Audit →</span>
-                    <svg id="submit-spinner" class="animate-spin h-4 w-4 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
+                    <span>Send Me My Free 60-Second Video Audit →</span>
                   </button>
                 </div>
 
@@ -1383,7 +1392,7 @@
   <!-- ========================================================================= -->
   <!-- INTERACTIVE LIVE STAGING SIMULATOR MODAL (Desktop / Mobile 390px View)   -->
   <!-- ========================================================================= -->
-  <div id="staging-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="modal-preview-title">
+  <div id="staging-modal" class="fixed inset-0 z-50 hidden bg-black/95 sm:bg-black/85 sm:backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="modal-preview-title">
     
     <div class="bg-zinc-950 border border-white/10 rounded-2xl w-full max-w-4xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden">
       
@@ -1788,65 +1797,9 @@
       }
     }
 
-    // 6. Web3Forms Asynchronous Submit Handler
-    function handleFormSubmit(event) {
-      event.preventDefault();
-      const form = document.getElementById('audit-lead-form');
-      const btn = document.getElementById('submit-button');
-      const btnText = document.getElementById('submit-text');
-      const spinner = document.getElementById('submit-spinner');
-      const successBanner = document.getElementById('form-success-banner');
 
-      // Visual loading state
-      btnText.textContent = "Analyzing & Sending...";
-      spinner.classList.remove('hidden');
-      btn.disabled = true;
 
-      // Extract form data
-      const formData = new FormData(form);
-      const object = Object.fromEntries(formData);
-      const json = JSON.stringify(object);
-
-      // Attempt async submission to Web3Forms API
-      fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: json
-      })
-      .then(async (response) => {
-        let jsonResponse = await response.json();
-        // Regardless of live key status on staging, provide immediate client feedback
-        showSuccessState();
-      })
-      .catch((error) => {
-        // Fallback smooth success presentation
-        showSuccessState();
-      });
-
-      function showSuccessState() {
-        spinner.classList.add('hidden');
-        btnText.textContent = "Video Audit Request Sent! ✓";
-        btn.classList.remove('from-brand-indigo', 'via-indigo-500', 'to-brand-cyan');
-        btn.classList.add('bg-emerald-600');
-
-        successBanner.classList.remove('hidden');
-        form.reset();
-
-        successBanner.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-        setTimeout(() => {
-          btn.disabled = false;
-          btnText.textContent = "Send Me My Free 60-Second Video Audit →";
-          btn.classList.add('from-brand-indigo', 'via-indigo-500', 'to-brand-cyan');
-          btn.classList.remove('bg-emerald-600');
-        }, 8000);
-      }
-    }
-
-    // 7. Ambient 3D Digital Background Engine & Camera Parallax
+    // 7. Ambient 3D Digital Background Engine & Camera Parallax (Optimized for 60fps Mobile Scrolling)
     (function initAmbient3D() {
       const canvas = document.getElementById('ambient-dots');
       if (!canvas) return;
@@ -1870,10 +1823,22 @@
       const node3 = document.getElementById('ambient-node-3');
       const node4 = document.getElementById('ambient-node-4');
 
+      // Mobile screen detection & particle limits (max 15 on mobile, 45 on desktop)
+      function isMobileScreen() {
+        return window.innerWidth < 768;
+      }
+
+      function getMaxParticles() {
+        return isMobileScreen() ? 15 : 45;
+      }
+
+      let activeParticleCount = getMaxParticles();
+
       function resize() {
         width = window.innerWidth;
         height = window.innerHeight;
-        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        activeParticleCount = getMaxParticles();
+        dpr = Math.min(window.devicePixelRatio || 1, isMobileScreen() ? 1 : 2);
         canvas.width = Math.floor(width * dpr);
         canvas.height = Math.floor(height * dpr);
         canvas.style.width = width + 'px';
@@ -1885,8 +1850,8 @@
       window.addEventListener('resize', resize, { passive: true });
       resize();
 
-      // Particle Node constructor (45 glowing nodes cyan/indigo)
-      const PARTICLE_COUNT = 45;
+      // Particle Node pool (45 max glowing nodes)
+      const MAX_PARTICLES = 45;
       const particles = [];
       const colors = [
         { r: 99, g: 102, b: 241 },   // Electric Indigo #6366F1
@@ -1895,60 +1860,89 @@
         { r: 56, g: 189, b: 248 }    // Sky Cyan #38BDF8
       ];
 
-      for (let i = 0; i < PARTICLE_COUNT; i++) {
+      for (let i = 0; i < MAX_PARTICLES; i++) {
         const color = colors[Math.floor(Math.random() * colors.length)];
         particles.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
+          x: Math.random() * (width || window.innerWidth),
+          y: Math.random() * (height || window.innerHeight),
           radius: Math.random() * 1.8 + 0.8,
           speedY: Math.random() * 0.45 + 0.18,
           speedX: (Math.random() - 0.5) * 0.2,
           opacity: Math.random() * 0.5 + 0.3,
           glow: Math.random() * 8 + 6,
-          depth: Math.random() * 0.7 + 0.3, // 3D depth multiplier for parallax
+          depth: Math.random() * 0.7 + 0.3,
           color: color,
           pulse: Math.random() * Math.PI * 2,
           pulseSpeed: Math.random() * 0.02 + 0.01
         });
       }
 
-      // Mouse & Touch Parallax Tracking
+      // Touch scrolling optimization: pause particle drawing during mobile swipe to guarantee 60fps
+      let isTouching = false;
+      let touchReleaseTimer = null;
+
+      function handleTouchStart() {
+        isTouching = true;
+        if (touchReleaseTimer) clearTimeout(touchReleaseTimer);
+      }
+
+      function handleTouchEnd() {
+        touchReleaseTimer = setTimeout(() => {
+          isTouching = false;
+        }, 120);
+      }
+
+      // Mouse & Touch Pointer Tracking with passive listeners
       function handlePointerMove(e) {
         const clientX = e.touches && e.touches.length > 0 ? e.touches[0].clientX : e.clientX;
         const clientY = e.touches && e.touches.length > 0 ? e.touches[0].clientY : e.clientY;
         const centerX = window.innerWidth / 2;
         const centerY = window.innerHeight / 2;
-        targetCamX = (clientX - centerX) / centerX; // Range -1 to 1
-        targetCamY = (clientY - centerY) / centerY; // Range -1 to 1
+        targetCamX = (clientX - centerX) / centerX;
+        targetCamY = (clientY - centerY) / centerY;
       }
 
       window.addEventListener('mousemove', handlePointerMove, { passive: true });
       window.addEventListener('touchmove', handlePointerMove, { passive: true });
+      window.addEventListener('touchstart', handleTouchStart, { passive: true });
+      window.addEventListener('touchend', handleTouchEnd, { passive: true });
+      window.addEventListener('touchcancel', handleTouchEnd, { passive: true });
 
       let animationFrameId = null;
       function animate() {
+        animationFrameId = requestAnimationFrame(animate);
+
+        // While user is actively touch-scrolling on mobile, pause canvas rendering for buttery 60fps
+        if (isTouching && isMobileScreen()) {
+          return;
+        }
+
         // Camera Lag Lerp
         currentCamX += (targetCamX - currentCamX) * 0.045;
         currentCamY += (targetCamY - currentCamY) * 0.045;
 
-        // Apply Parallax to 3D perspective grid plane
-        if (gridPlane) {
-          const gridOffsetX = -currentCamX * 18;
-          const gridOffsetY = -currentCamY * 12;
-          gridPlane.style.transform = `rotateX(68deg) translate3d(${gridOffsetX.toFixed(2)}px, ${gridOffsetY.toFixed(2)}px, 0)`;
-        }
+        const isDesktop = !isMobileScreen();
 
-        // Apply Parallax to background anchor nodes with distinct depth offsets
-        if (node1) node1.style.transform = `translate3d(${(-currentCamX * 28).toFixed(2)}px, ${(-currentCamY * 20).toFixed(2)}px, 0)`;
-        if (node2) node2.style.transform = `translate3d(${(currentCamX * 32).toFixed(2)}px, ${(currentCamY * 24).toFixed(2)}px, 0)`;
-        if (node3) node3.style.transform = `translate3d(${(-currentCamX * 36).toFixed(2)}px, ${(-currentCamY * 28).toFixed(2)}px, 0)`;
-        if (node4) node4.style.transform = `translate3d(${(currentCamX * 24).toFixed(2)}px, ${(currentCamY * 18).toFixed(2)}px, 0)`;
+        // Apply Parallax transforms ONLY on desktop (zero DOM layout recalculation during mobile scrolls)
+        if (isDesktop) {
+          if (gridPlane) {
+            const gridOffsetX = -currentCamX * 18;
+            const gridOffsetY = -currentCamY * 12;
+            gridPlane.style.transform = `rotateX(68deg) translate3d(${gridOffsetX.toFixed(2)}px, ${gridOffsetY.toFixed(2)}px, 0)`;
+          }
+
+          if (node1) node1.style.transform = `translate3d(${(-currentCamX * 28).toFixed(2)}px, ${(-currentCamY * 20).toFixed(2)}px, 0)`;
+          if (node2) node2.style.transform = `translate3d(${(currentCamX * 32).toFixed(2)}px, ${(currentCamY * 24).toFixed(2)}px, 0)`;
+          if (node3) node3.style.transform = `translate3d(${(-currentCamX * 36).toFixed(2)}px, ${(-currentCamY * 28).toFixed(2)}px, 0)`;
+          if (node4) node4.style.transform = `translate3d(${(currentCamX * 24).toFixed(2)}px, ${(currentCamY * 18).toFixed(2)}px, 0)`;
+        }
 
         // Clear canvas
         ctx.clearRect(0, 0, width, height);
 
-        // Render Particles
-        for (let i = 0; i < PARTICLE_COUNT; i++) {
+        // Render Active Particles (max 15 on mobile, 45 on desktop)
+        const count = activeParticleCount;
+        for (let i = 0; i < count; i++) {
           const p = particles[i];
 
           // Float upwards
@@ -1964,9 +1958,9 @@
           if (p.x < -20) p.x = width + 20;
           if (p.x > width + 20) p.x = -20;
 
-          // Parallax position offset (particles drift opposite to camera)
-          const renderX = p.x - currentCamX * 40 * p.depth;
-          const renderY = p.y - currentCamY * 30 * p.depth;
+          // Parallax position offset
+          const renderX = isDesktop ? (p.x - currentCamX * 40 * p.depth) : p.x;
+          const renderY = isDesktop ? (p.y - currentCamY * 30 * p.depth) : p.y;
 
           // Pulsing opacity
           const alpha = Math.max(0.15, Math.min(0.85, p.opacity + Math.sin(p.pulse) * 0.2));
@@ -1975,12 +1969,14 @@
           ctx.beginPath();
           ctx.arc(renderX, renderY, p.radius, 0, Math.PI * 2);
           ctx.fillStyle = `rgba(${p.color.r}, ${p.color.g}, ${p.color.b}, ${alpha})`;
-          ctx.shadowBlur = p.glow;
-          ctx.shadowColor = `rgba(${p.color.r}, ${p.color.g}, ${p.color.b}, 0.8)`;
+          if (isDesktop) {
+            ctx.shadowBlur = p.glow;
+            ctx.shadowColor = `rgba(${p.color.r}, ${p.color.g}, ${p.color.b}, 0.8)`;
+          } else {
+            ctx.shadowBlur = 0;
+          }
           ctx.fill();
         }
-
-        animationFrameId = requestAnimationFrame(animate);
       }
 
       // Pause when tab not visible to preserve device battery
