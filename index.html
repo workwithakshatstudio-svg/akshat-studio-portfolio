@@ -250,8 +250,8 @@
   </div>
 
   <!-- 1. FLOATING NAVIGATION BAR (Centered Pill / Capsule) -->
-  <div class="sticky top-2 sm:top-4 z-50 px-2 sm:px-6">
-    <nav class="w-[94%] max-w-sm md:w-full md:max-w-6xl xl:max-w-7xl mx-auto mt-2 md:mt-0 px-3.5 py-2 md:px-8 md:py-4 rounded-full bg-zinc-950/90 md:bg-[#0c0d14]/60 md:backdrop-blur-xl border border-white/10 shadow-[0_16px_45px_rgba(0,0,0,0.65)] flex items-center justify-between transition-all" aria-label="Main Navigation">
+  <div class="sticky top-2 sm:top-4 z-50 px-0 sm:px-6">
+    <nav class="w-[94%] max-w-sm md:w-full md:max-w-6xl xl:max-w-7xl mx-auto mt-2 md:mt-0 px-3 py-2 sm:px-4 md:px-8 md:py-4 rounded-full bg-zinc-950/90 md:bg-[#0c0d14]/60 md:backdrop-blur-xl border border-white/10 shadow-[0_16px_45px_rgba(0,0,0,0.65)] flex items-center justify-between transition-all" aria-label="Main Navigation">
       
       <!-- Left: Studio Logo with Animated Glowing Dot -->
       <a href="#" class="flex items-center gap-2 md:gap-3.5 group focus:outline-none shrink-0">
@@ -352,45 +352,45 @@
 
         <!-- Live Trust Stats Bar (4 Bento Metrics) -->
         <div class="mt-16 sm:mt-20 pt-8 border-t border-white/[0.08]">
-          <div class="grid grid-cols-2 gap-2 px-2 max-w-sm mx-auto sm:max-w-none sm:px-0 md:grid-cols-4 md:gap-4 md:max-w-5xl">
+          <div class="grid grid-cols-2 gap-2 px-4 max-w-sm mx-auto md:grid-cols-4 md:gap-4 md:max-w-5xl md:px-0">
             
             <!-- Metric 1 -->
-            <div class="p-3 sm:p-5 md:p-6 rounded-2xl glass-card-interactive text-left">
-              <div class="flex items-center justify-between">
+            <div class="p-2.5 sm:p-4 md:p-5 rounded-2xl glass-card-interactive text-center md:text-left">
+              <div class="flex flex-col md:flex-row items-center justify-between gap-1">
                 <span class="text-2xl sm:text-3xl md:text-4xl font-extrabold font-mono text-white tracking-tight">0.7s</span>
                 <span class="text-[9px] sm:text-[10px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-1.5 sm:px-2 py-0.5 rounded-full whitespace-nowrap">Core Web Vitals</span>
               </div>
-              <p class="text-xs sm:text-sm font-semibold text-zinc-200 mt-2">Average Page Load</p>
+              <p class="text-xs sm:text-sm font-semibold text-zinc-200 mt-1.5 sm:mt-2">Average Page Load</p>
               <p class="text-[10px] sm:text-[11px] text-zinc-400 mt-0.5">Google Lighthouse 99 Score</p>
             </div>
 
             <!-- Metric 2 -->
-            <div class="p-3 sm:p-5 md:p-6 rounded-2xl glass-card-interactive text-left">
-              <div class="flex items-center justify-between">
+            <div class="p-2.5 sm:p-4 md:p-5 rounded-2xl glass-card-interactive text-center md:text-left">
+              <div class="flex flex-col md:flex-row items-center justify-between gap-1">
                 <span class="text-2xl sm:text-3xl md:text-4xl font-extrabold font-mono text-white tracking-tight">100%</span>
                 <span class="text-[9px] sm:text-[10px] font-mono text-brand-cyan bg-cyan-500/10 border border-cyan-500/20 px-1.5 sm:px-2 py-0.5 rounded-full whitespace-nowrap">1-Tap Dial</span>
               </div>
-              <p class="text-xs sm:text-sm font-semibold text-zinc-200 mt-2">Mobile Viewport Optimization</p>
+              <p class="text-xs sm:text-sm font-semibold text-zinc-200 mt-1.5 sm:mt-2">Mobile Viewport Optimization</p>
               <p class="text-[10px] sm:text-[11px] text-zinc-400 mt-0.5">Engineered for iOS & Android</p>
             </div>
 
             <!-- Metric 3 -->
-            <div class="p-3 sm:p-5 md:p-6 rounded-2xl glass-card-interactive text-left">
-              <div class="flex items-center justify-between">
+            <div class="p-2.5 sm:p-4 md:p-5 rounded-2xl glass-card-interactive text-center md:text-left">
+              <div class="flex flex-col md:flex-row items-center justify-between gap-1">
                 <span class="text-2xl sm:text-3xl md:text-4xl font-extrabold font-mono text-white tracking-tight">48h</span>
                 <span class="text-[9px] sm:text-[10px] font-mono text-amber-400 bg-amber-500/10 border border-amber-500/20 px-1.5 sm:px-2 py-0.5 rounded-full whitespace-nowrap">Rapid Sprint</span>
               </div>
-              <p class="text-xs sm:text-sm font-semibold text-zinc-200 mt-2">Turnaround to Staging</p>
+              <p class="text-xs sm:text-sm font-semibold text-zinc-200 mt-1.5 sm:mt-2">Turnaround to Staging</p>
               <p class="text-[10px] sm:text-[11px] text-zinc-400 mt-0.5">From intake call to staging preview</p>
             </div>
 
             <!-- Metric 4 -->
-            <div class="p-3 sm:p-5 md:p-6 rounded-2xl glass-card-interactive text-left">
-              <div class="flex items-center justify-between">
+            <div class="p-2.5 sm:p-4 md:p-5 rounded-2xl glass-card-interactive text-center md:text-left">
+              <div class="flex flex-col md:flex-row items-center justify-between gap-1">
                 <span class="text-lg sm:text-xl md:text-2xl font-extrabold font-mono text-white tracking-tight pt-1">EST / GMT</span>
                 <span class="text-[9px] sm:text-[10px] font-mono text-brand-indigoLight bg-indigo-500/10 border border-indigo-500/20 px-1.5 sm:px-2 py-0.5 rounded-full whitespace-nowrap">US & UK</span>
               </div>
-              <p class="text-xs sm:text-sm font-semibold text-zinc-200 mt-2">Business Hours Overlap</p>
+              <p class="text-xs sm:text-sm font-semibold text-zinc-200 mt-1.5 sm:mt-2">Business Hours Overlap</p>
               <p class="text-[10px] sm:text-[11px] text-zinc-400 mt-0.5">Real-time Slack & Email contact</p>
             </div>
 
@@ -430,7 +430,7 @@
         <div class="flex md:grid md:grid-cols-3 overflow-x-auto md:overflow-visible snap-x snap-mandatory gap-4 px-4 pb-4 -mx-4 md:mx-0 md:px-0 no-scrollbar">
           
           <!-- CARD 1: Apex Roofing & Emergency Repairs -->
-          <article data-category="trades" class="min-w-[85vw] sm:min-w-[340px] md:min-w-0 snap-center demo-card glass-card-interactive rounded-2xl sm:rounded-3xl overflow-hidden flex flex-col justify-between">
+          <article data-category="trades" class="min-w-[85vw] sm:min-w-[340px] md:min-w-0 shrink-0 md:shrink snap-center demo-card glass-card-interactive rounded-2xl sm:rounded-3xl overflow-hidden flex flex-col justify-between">
             <div>
               <!-- Mac-Style Window Header -->
               <div class="bg-black/60 border-b border-white/[0.08] px-4 py-3 flex items-center justify-between text-xs text-zinc-400">
@@ -509,7 +509,7 @@
           </article>
 
           <!-- CARD 2: Lumina Aesthetics & Laser Clinic -->
-          <article data-category="clinics" class="min-w-[85vw] sm:min-w-[340px] md:min-w-0 snap-center demo-card glass-card-interactive rounded-2xl sm:rounded-3xl overflow-hidden flex flex-col justify-between">
+          <article data-category="clinics" class="min-w-[85vw] sm:min-w-[340px] md:min-w-0 shrink-0 md:shrink snap-center demo-card glass-card-interactive rounded-2xl sm:rounded-3xl overflow-hidden flex flex-col justify-between">
             <div>
               <!-- Mac-Style Window Header -->
               <div class="bg-black/60 border-b border-white/[0.08] px-4 py-3 flex items-center justify-between text-xs text-zinc-400">
@@ -586,7 +586,7 @@
           </article>
 
           <!-- CARD 3: Vanguard Commercial Services -->
-          <article data-category="b2b" class="min-w-[85vw] sm:min-w-[340px] md:min-w-0 snap-center demo-card glass-card-interactive rounded-2xl sm:rounded-3xl overflow-hidden flex flex-col justify-between">
+          <article data-category="b2b" class="min-w-[85vw] sm:min-w-[340px] md:min-w-0 shrink-0 md:shrink snap-center demo-card glass-card-interactive rounded-2xl sm:rounded-3xl overflow-hidden flex flex-col justify-between">
             <div>
               <!-- Mac-Style Window Header -->
               <div class="bg-black/60 border-b border-white/[0.08] px-4 py-3 flex items-center justify-between text-xs text-zinc-400">
@@ -888,7 +888,7 @@
         <div class="flex md:grid md:grid-cols-3 overflow-x-auto md:overflow-visible snap-x snap-mandatory gap-4 px-4 pb-6 -mx-4 md:mx-0 md:px-0 no-scrollbar items-stretch max-w-6xl mx-auto">
           
           <!-- CARD 1 (LEFT — STANDARD STYLE): Fast-Track Landing Page ($450) -->
-          <div class="min-w-[85vw] sm:min-w-[320px] md:min-w-0 snap-center rounded-2xl p-7 sm:p-8 flex flex-col justify-between bg-[#0c0d14]/95 sm:bg-[#0c0d14]/60 sm:backdrop-blur-xl border border-white/[0.06] shadow-2xl shadow-indigo-950/10 hover:border-indigo-500/30 hover:shadow-[0_0_30px_-5px_rgba(99,102,241,0.15)] transition-all duration-500 hover:-translate-y-1">
+          <div class="min-w-[85vw] sm:min-w-[320px] md:min-w-0 shrink-0 md:shrink snap-center rounded-2xl p-7 sm:p-8 flex flex-col justify-between bg-[#0c0d14]/95 sm:bg-[#0c0d14]/60 sm:backdrop-blur-xl border border-white/[0.06] shadow-2xl shadow-indigo-950/10 hover:border-indigo-500/30 hover:shadow-[0_0_30px_-5px_rgba(99,102,241,0.15)] transition-all duration-500 hover:-translate-y-1">
             <div>
               <div class="flex items-center justify-between">
                 <span class="text-xs font-mono uppercase tracking-wider text-zinc-400 font-semibold">Tier 01</span>
@@ -947,7 +947,7 @@
           </div>
 
           <!-- CARD 2 (MIDDLE — THE ONLY HIGHLIGHTED CARD): The Authority Website ($850) -->
-          <div class="min-w-[85vw] sm:min-w-[320px] md:min-w-0 snap-center rounded-2xl p-7 sm:p-8 flex flex-col justify-between relative border-2 border-indigo-500/70 shadow-[0_0_35px_-5px_rgba(99,102,241,0.35)] bg-gradient-to-b from-indigo-950/40 via-[#0c0d14]/95 to-[#0c0d14]/95 sm:via-[#0c0d14]/60 sm:to-[#0c0d14]/80 sm:backdrop-blur-xl lg:-translate-y-2 lg:hover:-translate-y-3 transition-all duration-500 z-10">
+          <div class="min-w-[85vw] sm:min-w-[320px] md:min-w-0 shrink-0 md:shrink snap-center rounded-2xl p-7 sm:p-8 flex flex-col justify-between relative border-2 border-indigo-500/70 shadow-[0_0_35px_-5px_rgba(99,102,241,0.35)] bg-gradient-to-b from-indigo-950/40 via-[#0c0d14]/95 to-[#0c0d14]/95 sm:via-[#0c0d14]/60 sm:to-[#0c0d14]/80 sm:backdrop-blur-xl lg:-translate-y-2 lg:hover:-translate-y-3 transition-all duration-500 z-10">
             
             <!-- Floating Badge at Top -->
             <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-indigo-500 via-brand-indigo to-brand-cyan text-white text-[10px] font-bold uppercase tracking-wider py-1 px-4 rounded-full shadow-lg border border-white/20 whitespace-nowrap">
@@ -1020,7 +1020,7 @@
           </div>
 
           <!-- CARD 3 (RIGHT — STANDARD STYLE): Multi-Page Premium Hub ($1,500) -->
-          <div class="min-w-[85vw] sm:min-w-[320px] md:min-w-0 snap-center rounded-2xl p-7 sm:p-8 flex flex-col justify-between bg-[#0c0d14]/95 sm:bg-[#0c0d14]/60 sm:backdrop-blur-xl border border-white/[0.06] shadow-2xl shadow-indigo-950/10 hover:border-indigo-500/30 hover:shadow-[0_0_30px_-5px_rgba(99,102,241,0.15)] transition-all duration-500 hover:-translate-y-1">
+          <div class="min-w-[85vw] sm:min-w-[320px] md:min-w-0 shrink-0 md:shrink snap-center rounded-2xl p-7 sm:p-8 flex flex-col justify-between bg-[#0c0d14]/95 sm:bg-[#0c0d14]/60 sm:backdrop-blur-xl border border-white/[0.06] shadow-2xl shadow-indigo-950/10 hover:border-indigo-500/30 hover:shadow-[0_0_30px_-5px_rgba(99,102,241,0.15)] transition-all duration-500 hover:-translate-y-1">
             <div>
               <div class="flex items-center justify-between">
                 <span class="text-xs font-mono uppercase tracking-wider text-zinc-400 font-semibold">Tier 03</span>
